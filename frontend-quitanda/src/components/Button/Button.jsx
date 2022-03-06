@@ -82,6 +82,7 @@ const Button = styled.button`
 	};
 `;
 
+
 const ButtonOutlined = styled(Button)`
 	background: transparent;
 	color: ${getOutlinedText};
@@ -90,6 +91,7 @@ const ButtonOutlined = styled(Button)`
 		color: ${getDarkColor};
 	};
 `;
+
 
 const ButtonLink = styled(Button)`
 	background-color: transparent;
@@ -115,6 +117,7 @@ const ButtonWrapper = (props) => {
 	};
 	
 };
+
 
 ButtonWrapper.defaultProps = {
 	type: 'button',
