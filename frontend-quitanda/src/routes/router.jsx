@@ -7,8 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { LocalStorageKeys } from '../enums/local-storage-keys-enum';
 
 // COMPONENTS
-import { DashboardRoutes } from './DashboardRoutes/router';
-// import { AuthRoutes } from './AuthRoutes/router';
+// import { DashboardRoutes } from './DashboardRoutes/router';
+import { AuthRoutes } from './AuthRoutes/router';
 
 export const Routes = () => {
 	// const { user } = useAuth();
@@ -20,7 +20,8 @@ export const Routes = () => {
 
 	return (
 		<BrowserRouter>
-		<DashboardRoutes />
+    <AuthRoutes />
+		{/* <DashboardRoutes /> */}
 			{/* {isAuthenticated() ? <DashboardRoutes /> : <AuthRoutes />} */}
 		</BrowserRouter>
 	);

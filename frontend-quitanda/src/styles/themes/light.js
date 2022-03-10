@@ -16,5 +16,7 @@ export const LightTheme = {
     success: LightColors.SUCCESS,
     info: LightColors.INFO,
     warning: LightColors.WARNING,
+    
+    container: LightColors.CONTAINER,
   },
 };
