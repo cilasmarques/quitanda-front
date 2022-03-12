@@ -52,15 +52,15 @@ export const Subtitle = styled.p`
 
 export const FormComponents = styled.p`
   width: 100%;
-  height: 17rem;
+  height: 15rem;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-export const BottomText = styled.p`
-  margin-top: 8rem;
+export const Footer = styled.div`
+  margin-top: 9rem;
   text-align: center;
 `;
 

@@ -1,14 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import styled from 'styled-components';
 
 export const InputVariants = {
-	default: 'default',
-	password: 'password'
+  default: 'default',
+  password: 'password'
 };
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;  
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   width: 100%;
 `;
 
@@ -24,41 +27,49 @@ const Input = styled.input`
   width: 95%;
 	font-size: 1rem;
 	font-weight: 600;
-	padding: 12px 12px;
+	padding: 10px 12px;
   border-radius: 5px;
 `;
-
-const InputPassword = styled(Input)`
-  width: 95%;
-	font-size: 1rem;
-	font-weight: 600;
-  border-radius: 5px;
-`;
-
 
 const InputWrapper = (props) => {
-	switch (props.variant) {
-		case InputVariants.password:
-			return (
-        <Fragment>
+  const [showPassword, setShowPassword] = useState(false);
+
+  const faEye = (
+    <Fragment>
+      {showPassword ?
+        <FaEyeSlash onClick={() => setShowPassword(false)}
+          style={{ position: 'absolute', alignSelf: 'end', marginLeft: '-4rem', marginTop: '0.5rem' }}
+        /> :
+        <FaEye onClick={() => setShowPassword(true)}
+          style={{ position: 'absolute', alignSelf: 'end', marginLeft: '-4rem', marginTop: '0.5rem' }}
+        />
+      }
+    </Fragment>
+  )
+
+  switch (props.variant) {
+    case InputVariants.password:
+      return (
+        <Container>
           <InputTitle>{props.placeholder}</InputTitle>
-          <InputPassword {...props}/> 
-        </Fragment>
+          <Input {...props} type={showPassword ? 'input' : 'password'} /> 
+          {faEye}
+        </Container>
       );
-		default:
-			return (
-        <Fragment>
+    default:
+      return (
+        <Container>
           <InputTitle>{props.placeholder}</InputTitle>
           <Input {...props} />
-        </Fragment>
+        </Container>
       );
-	};	
+  };
 };
 
 InputWrapper.defaultProps = {
-	type: 'input',
-	children: undefined,
-	variant: 'default',
+  type: 'input',
+  children: undefined,
+  variant: 'default',
   placeholder: ''
 };
 

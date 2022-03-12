@@ -10,11 +10,11 @@ import {
   Title,
   Subtitle,
   FormComponents,
-  BottomText,
+  Footer,
   FormLink
 } from "./styles";
 
-export const SignInPage = () => {
+const SignInPage = () => {
   return (
     <Container>
       <LoginBox>
@@ -25,13 +25,13 @@ export const SignInPage = () => {
 
         <FormComponents>
           <InputWrapper placeholder='Nome de usuário'/>
-          <InputWrapper variant='password' placeholder='Senha'/>
+          <InputWrapper placeholder='Senha' variant='password' type='password' required/>
           <ButtonWrapper variant="form">Sign In</ButtonWrapper>
         </FormComponents>
 
-        <BottomText>
+        <Footer>
           <span>Não tem uma conta? <FormLink>Crie uma!</FormLink> </span>
-        </BottomText>
+        </Footer>
       </LoginBox>
     </Container>
     );
