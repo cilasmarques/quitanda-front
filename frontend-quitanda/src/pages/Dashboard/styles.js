@@ -68,3 +68,9 @@ export const CarouselButton = styled.button`
     background-color: #c9c3b3;
   }
 `;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 16px;
+`;

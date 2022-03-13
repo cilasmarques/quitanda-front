@@ -3,7 +3,7 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 import { Header } from "../../components/Header/Header";
 import { Carousel } from "../../components/Carousel/Carousel";
-import { Container, SearchInput, CarouselButton } from "./styles";
+import { Container, SearchInput, CarouselButton, Content } from "./styles";
 import { CarouselHeader } from "../../components/CarouselHeader/CarouselHeader";
 import Card from "../../components/Card/Card";
 
@@ -30,14 +30,13 @@ export const Dashboard = () => {
             <IoIosArrowForward />
           </CarouselButton>
         </CarouselHeader>
-        <div style={{ display: "flex" }}>
-          <Card>Teste</Card>
-          <Card>Teste</Card>
-          <Card>Teste</Card>
-          <Card>Teste</Card>
-          <Card>Teste</Card>
-          <Card>Teste</Card>
-        </div>
+
+        <Content>
+          <Card title="Juinin"></Card>
+          <Card title="Jogo Campinense x Treze"></Card>
+          <Card title="Cachaça artesanal"></Card>
+          <Card title="Cachaça artesanal"></Card>
+        </Content>
       </Carousel>
 
       <Carousel>
@@ -58,7 +57,11 @@ export const Dashboard = () => {
             <IoIosArrowForward />
           </CarouselButton>
         </CarouselHeader>
-        <Card>Teste</Card>
+        <Content>
+          <Card title="Juinin"></Card>
+          <Card title="Jogo Campinense x Treze"></Card>
+          <Card title="Cachaça artesanal"></Card>
+        </Content>
       </Carousel>
 
       <Carousel>
@@ -79,7 +82,11 @@ export const Dashboard = () => {
             <IoIosArrowForward />
           </CarouselButton>
         </CarouselHeader>
-        <Card>Teste</Card>
+        <Content>
+          <Card title="Juinin"></Card>
+          <Card title="Jogo Campinense x Treze"></Card>
+          <Card title="Cachaça artesanal"></Card>
+        </Content>
       </Carousel>
     </Container>
   );

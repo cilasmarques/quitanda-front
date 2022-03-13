@@ -15,7 +15,7 @@ export const TitleContainer = styled.div`
     font-family: "Mulish";
     font-style: normal;
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     line-height: 1.875rem;
     letter-spacing: 0.3px;
   }
