@@ -8,29 +8,26 @@ import NotFound from "../../pages/NotFound";
 // ADMIN PAGES
 import Dashboard from "../../pages/Dashboard";
 import UserList from "../../pages/UserList";
-import { Sidebar } from "../../components/Sidebar/Sidebar";
+import { Layout } from "../../components/Layout/Layout";
 
 export const DashboardRoutes = () => {
   return (
-    <Sidebar>
+    <Layout>
       <Routes>
-        {/* <Route
-        render={(props) => ( */}
         <Route index element={<Dashboard />} />
 
-        <Route path="/admin">
-          <Route path="usuarios" element={<UserList />} />
+        <Route path="/perfil">
+          <Route index element={<Profile />} />
+          <Route path=":name/edit" element={<Profile />} />
+        </Route>
+
+        <Route path="/admin/usuarios">
+          <Route index element={<UserList />} />
           <Route path=":id/edit" element={<Profile />} />
         </Route>
 
-        <Route path="/perfil">
-          <Route path=":name" element={<Profile />} />
-          <Route path=":name/edit" element={<Profile />} />
-        </Route>
         <Route path="*" element={<NotFound to="/dashboard" />} />
-        {/* )}
-      /> */}
       </Routes>
-    </Sidebar>
+    </Layout>
   );
 };
