@@ -8,7 +8,7 @@ import {
   MenuContainer,
   MenuItemLink,
   Title,
-  Header,
+  SidebarTitle,
   SidebarItem,
 } from "./styles";
 
@@ -36,27 +36,27 @@ export const Sidebar = () => {
 
   return (
     <Container>
-      <Header>
+      <SidebarTitle>
         <Title>Quitanda</Title>
-      </Header>
-      {/* 
-      <MenuContainer> */}
-      {SidebarItems.map((item, index) => {
-        return (
-          <MenuItemLink key={item.name} to={item.route}>
-            <SidebarItem active={index === activeIndex}>
-              {<item.icon />}
-              {item.name}
-            </SidebarItem>
-          </MenuItemLink>
-        );
-      })}
+      </SidebarTitle>
 
-      <SidebarItem>
-        <MdExitToApp />
-        Sair
-      </SidebarItem>
-      {/* </MenuContainer> */}
+      <MenuContainer>
+        {SidebarItems.map((item, index) => {
+          return (
+            <MenuItemLink key={item.name} to={item.route}>
+              <SidebarItem active={index === activeIndex}>
+                {<item.icon />}
+                {item.name}
+              </SidebarItem>
+            </MenuItemLink>
+          );
+        })}
+
+        <SidebarItem>
+          <MdExitToApp />
+          Sair
+        </SidebarItem>
+      </MenuContainer>
     </Container>
   );
 };

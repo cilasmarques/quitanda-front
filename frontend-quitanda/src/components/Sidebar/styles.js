@@ -1,13 +1,11 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  grid-area: SB;
   height: 100%;
-  width: 16rem;
 
+  position: relative;
   background-color: ${(props) => props.theme.colors.primary.main};
   border: 5px solid ${(props) => props.theme.colors.primary.second};
 
@@ -15,7 +13,7 @@ export const Container = styled.div`
   box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
 `;
 
-export const Header = styled.header`
+export const SidebarTitle = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +22,7 @@ export const Header = styled.header`
 `;
 
 export const Title = styled.h2`
-  color: ${(props) => props.theme.colors.primary.text};
+  color: ${(props) => props.theme.colors.primary.white};
   font-weight: 700;
   font-size: 1.5rem;
   font-family: "Mulish", "Roboto";
@@ -36,6 +34,8 @@ export const Title = styled.h2`
 `;
 
 export const MenuContainer = styled.div`
+  flex-basis: 20rem;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 `;
@@ -59,7 +59,7 @@ export const SidebarItem = styled.div`
   background: ${(props) =>
     props.active ? props.theme.colors.primary.second : ""};
 
-  color: ${(props) => props.theme.colors.primary.text};
+  color: ${(props) => props.theme.colors.primary.white};
 
   &:hover {
     background: ${(props) => props.theme.colors.primary.second};
