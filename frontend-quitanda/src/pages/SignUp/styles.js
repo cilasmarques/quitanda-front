@@ -14,8 +14,8 @@ export const BoxContainer = styled.div`
   flex-direction: column;
   text-align: center;
 
-  width: 110rem;
-  height: 55rem;
+  width: 71.5rem;
+  height: 42.8rem;
   
   background-color: #e5ddcb;
   border-radius: 0.5rem;
@@ -40,7 +40,7 @@ export const Title = styled.h2`
 
 export const FormComponents = styled.div`
   width: 100%;
-  height: 32rem;
+  height: 28rem;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -48,7 +48,12 @@ export const FormComponents = styled.div`
 `;
 
 export const Footer = styled.div`
-  margin-top: 12rem;
+  margin-top: 2rem;
+  height: 6.5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const FormLink = styled.a`

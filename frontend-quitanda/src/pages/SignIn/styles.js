@@ -13,8 +13,8 @@ export const Container = styled.div`
 export const LoginBox = styled.div`
   flex-direction: column;
 
-  width: 60rem;
-  height: 42rem;
+  width: 50rem;
+  height: 30rem;
   
   background-color: #e5ddcb;
   border-radius: 0.5rem;
@@ -23,7 +23,7 @@ export const LoginBox = styled.div`
 export const Header = styled.header`
   text-align: center;
   padding-top: 40px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 `;
 
 export const Title = styled.h2`
@@ -52,7 +52,7 @@ export const Subtitle = styled.p`
 
 export const FormComponents = styled.p`
   width: 100%;
-  height: 15rem;
+  height: 12rem;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -60,7 +60,7 @@ export const FormComponents = styled.p`
 `;
 
 export const Footer = styled.div`
-  margin-top: 9rem;
+  margin-top: 7.3rem;
   text-align: center;
 `;
 
