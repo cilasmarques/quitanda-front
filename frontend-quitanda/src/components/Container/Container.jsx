@@ -2,18 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // STYLES
-import { Container } from "./styles";
+import { Wrapper } from "./styles";
 
-export const Carousel = ({ children }) => {
-  return <Container>{children}</Container>;
+export const Container = ({ children }) => {
+  return <Wrapper>{children}</Wrapper>;
 };
 
-Carousel.defaultProps = {
+Container.defaultProps = {
   title: "Error",
   children: undefined,
 };
 
-Carousel.propTypes = {
+Container.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
 };

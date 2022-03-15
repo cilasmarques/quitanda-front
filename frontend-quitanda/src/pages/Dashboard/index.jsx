@@ -1,18 +1,23 @@
 import React from "react";
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+
+import Carousel from "../../components/Carousel/index";
+
+import docinho from "../../assets/docinho.jpeg";
+import povo from "../../assets/povo.jpeg";
+import jarro from "../../assets/jarro.jpeg";
 
 import { Header } from "../../components/Header/Header";
-import { Carousel } from "../../components/Carousel/Carousel";
-import { Container, SearchInput, CarouselButton, Content } from "./styles";
+import { Container } from "../../components/Container/Container";
+import { Root, SearchInput, Content } from "./styles";
 import { CarouselHeader } from "../../components/CarouselHeader/CarouselHeader";
-import Card from "../../components/Card/Card";
+import Card, { CardBody, CardMedia } from "../../components/Card/Card";
 
 export const Dashboard = () => {
   return (
-    <Container>
+    <Root>
       <Header title="Dashboard" />
 
-      <Carousel>
+      <Container>
         <CarouselHeader title="Artistas">
           <SearchInput>
             <div className="search">
@@ -21,25 +26,57 @@ export const Dashboard = () => {
               </div>
             </div>
           </SearchInput>
-
-          <CarouselButton>
-            <IoIosArrowBack />
-          </CarouselButton>
-
-          <CarouselButton>
-            <IoIosArrowForward />
-          </CarouselButton>
         </CarouselHeader>
 
         <Content>
-          <Card title="Juinin"></Card>
-          <Card title="Jogo Campinense x Treze"></Card>
-          <Card title="Cachaça artesanal"></Card>
-          <Card title="Cachaça artesanal"></Card>
+          <Carousel>
+            <Card title="Junin">
+              <CardMedia image={docinho} size="default" />
+              <CardBody color="black">
+                <h6>Artesão</h6>
+                <h6>Ver perfil</h6>
+              </CardBody>
+            </Card>
+            <Card title="Junin">
+              <CardMedia image={docinho} size="default" />
+              <CardBody color="black">
+                <h6>Artesão</h6>
+                <h6>Ver perfil</h6>
+              </CardBody>
+            </Card>
+            <Card title="Junin">
+              <CardMedia image={docinho} size="default" />
+              <CardBody color="black">
+                <h6>Artesão</h6>
+                <h6>Ver perfil</h6>
+              </CardBody>
+            </Card>
+            <Card title="Junin">
+              <CardMedia image={docinho} size="default" />
+              <CardBody color="black">
+                <h6>Artesão</h6>
+                <h6>Ver perfil</h6>
+              </CardBody>
+            </Card>
+            <Card title="Junin">
+              <CardMedia image={docinho} size="default" />
+              <CardBody color="black">
+                <h6>Artesão</h6>
+                <h6>Ver perfil</h6>
+              </CardBody>
+            </Card>
+            <Card title="Junin">
+              <CardMedia image={docinho} size="default" />
+              <CardBody color="black">
+                <h6>Artesão</h6>
+                <h6>Ver perfil</h6>
+              </CardBody>
+            </Card>
+          </Carousel>
         </Content>
-      </Carousel>
+      </Container>
 
-      <Carousel>
+      <Container>
         <CarouselHeader title="Eventos">
           <SearchInput>
             <div className="search">
@@ -48,23 +85,70 @@ export const Dashboard = () => {
               </div>
             </div>
           </SearchInput>
-
-          <CarouselButton>
-            <IoIosArrowBack />
-          </CarouselButton>
-
-          <CarouselButton>
-            <IoIosArrowForward />
-          </CarouselButton>
         </CarouselHeader>
         <Content>
-          <Card title="Juinin"></Card>
-          <Card title="Jogo Campinense x Treze"></Card>
-          <Card title="Cachaça artesanal"></Card>
+          <Carousel>
+            <Card title="Jogo Campinense x Treze">
+              <CardMedia image={povo} size="default" />
+              <CardBody color="black">
+                <p>Local: Amigão </p>
+                <p>Data e hora: 20/02/22 15:00</p>
+                <p> Ver Detalhes </p>
+              </CardBody>
+            </Card>
+            <Card title="Jogo Campinense x Treze">
+              <CardMedia image={povo} size="default" />
+              <CardBody color="black">
+                <p>Local: Amigão </p>
+                <p>Data e hora: 20/02/22 15:00</p>
+                <p> Ver Detalhes </p>
+              </CardBody>
+            </Card>
+            <Card title="Jogo Campinense x Treze">
+              <CardMedia image={povo} size="default" />
+              <CardBody color="black">
+                <p>Local: Amigão </p>
+                <p>Data e hora: 20/02/22 15:00</p>
+                <p> Ver Detalhes </p>
+              </CardBody>
+            </Card>
+            <Card title="Jogo Campinense x Treze">
+              <CardMedia image={povo} size="default" />
+              <CardBody color="black">
+                <p>Local: Amigão </p>
+                <p>Data e hora: 20/02/22 15:00</p>
+                <p> Ver Detalhes </p>
+              </CardBody>
+            </Card>
+            <Card title="Jogo Campinense x Treze">
+              <CardMedia image={povo} size="default" />
+              <CardBody color="black">
+                <p>Local: Amigão </p>
+                <p>Data e hora: 20/02/22 15:00</p>
+                <p> Ver Detalhes </p>
+              </CardBody>
+            </Card>
+            <Card title="Jogo Campinense x Treze">
+              <CardMedia image={povo} size="default" />
+              <CardBody color="black">
+                <p>Local: Amigão </p>
+                <p>Data e hora: 20/02/22 15:00</p>
+                <p> Ver Detalhes </p>
+              </CardBody>
+            </Card>
+            <Card title="Jogo Campinense x Treze">
+              <CardMedia image={povo} size="default" />
+              <CardBody color="black">
+                <p>Local: Amigão </p>
+                <p>Data e hora: 20/02/22 15:00</p>
+                <p> Ver Detalhes </p>
+              </CardBody>
+            </Card>
+          </Carousel>
         </Content>
-      </Carousel>
+      </Container>
 
-      <Carousel>
+      <Container>
         <CarouselHeader title="Produtos">
           <SearchInput>
             <div className="search">
@@ -73,22 +157,61 @@ export const Dashboard = () => {
               </div>
             </div>
           </SearchInput>
-
-          <CarouselButton>
-            <IoIosArrowBack />
-          </CarouselButton>
-
-          <CarouselButton>
-            <IoIosArrowForward />
-          </CarouselButton>
         </CarouselHeader>
         <Content>
-          <Card title="Juinin"></Card>
-          <Card title="Jogo Campinense x Treze"></Card>
-          <Card title="Cachaça artesanal"></Card>
+          <Carousel>
+            <Card title="Cachaça artesanal">
+              <CardMedia image={jarro} size="default" />
+              <CardBody color="black">
+                <p>Preço: R$30,00 </p>
+                <p> Ver Detalhes </p>
+                <p>Ver perfil do vendedor</p>
+              </CardBody>
+            </Card>
+            <Card title="Cachaça artesanal">
+              <CardMedia image={jarro} size="default" />
+              <CardBody color="black">
+                <p>Preço: R$30,00 </p>
+                <p> Ver Detalhes </p>
+                <p>Ver perfil do vendedor</p>
+              </CardBody>
+            </Card>{" "}
+            <Card title="Cachaça artesanal">
+              <CardMedia image={jarro} size="default" />
+              <CardBody color="black">
+                <p>Preço: R$30,00 </p>
+                <p> Ver Detalhes </p>
+                <p>Ver perfil do vendedor</p>
+              </CardBody>
+            </Card>{" "}
+            <Card title="Cachaça artesanal">
+              <CardMedia image={jarro} size="default" />
+              <CardBody color="black">
+                <p>Preço: R$30,00 </p>
+                <p> Ver Detalhes </p>
+                <p>Ver perfil do vendedor</p>
+              </CardBody>
+            </Card>{" "}
+            <Card title="Cachaça artesanal">
+              <CardMedia image={jarro} size="default" />
+              <CardBody color="black">
+                <p>Preço: R$30,00 </p>
+                <p> Ver Detalhes </p>
+                <p>Ver perfil do vendedor</p>
+              </CardBody>
+            </Card>{" "}
+            <Card title="Cachaça artesanal">
+              <CardMedia image={jarro} size="default" />
+              <CardBody color="black">
+                <p>Preço: R$30,00 </p>
+                <p> Ver Detalhes </p>
+                <p>Ver perfil do vendedor</p>
+              </CardBody>
+            </Card>
+          </Carousel>
         </Content>
-      </Carousel>
-    </Container>
+      </Container>
+    </Root>
   );
 };
 

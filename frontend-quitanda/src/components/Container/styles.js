@@ -1,16 +1,14 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100%;
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  align-items: center;
+  flex: 1;
+  align-items: flex-start;
   margin-bottom: 0.5rem;
   background: ${(props) => props.theme.colors.primary.container};
   border-radius: 0.3rem;
   padding: 0.3rem 0.8rem 0.3rem 0.8rem;
-  align-items: flex-start;
 `;
 
 export const Title = styled.div`

@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Root = styled.div`
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 export const SearchInput = styled.div`
@@ -54,23 +55,15 @@ export const SearchInput = styled.div`
   }
 `;
 
-export const CarouselButton = styled.button`
-  padding: 0 0.3rem;
-  font-size: 1.25rem;
-  border: none;
-  background: none;
-  cursor: pointer;
-
-  display: flex;
-  justify-content: center;
-
-  :hover {
-    background-color: #c9c3b3;
-  }
-`;
-
 export const Content = styled.div`
   display: flex;
-  flex-direction: row;
-  column-gap: 16px;
+  flex: 1;
+  @media (min-width: 1300px) {
+    max-width: 1050px;
+  }
+  @media (min-width: 2200px) {
+    max-width: 2150px;
+  }
+  overflow: hidden;
+  flex-direction: column;
 `;
