@@ -22,7 +22,7 @@ export const BoxContainer = styled.div`
 `;
 
 export const Header = styled.header`
-  padding-top: 2rem;
+  padding-top: 1.2rem;
   padding-bottom: 1.5rem;
 `;
 
@@ -49,7 +49,7 @@ export const FormComponents = styled.div`
 
 export const Footer = styled.div`
   margin-top: 2rem;
-  height: 6.5rem;
+  height: 7rem;
   display: flex;
   align-items: center;
   flex-direction: column;

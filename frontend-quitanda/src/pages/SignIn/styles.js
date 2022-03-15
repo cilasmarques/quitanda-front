@@ -14,7 +14,7 @@ export const LoginBox = styled.div`
   flex-direction: column;
 
   width: 50rem;
-  height: 30rem;
+  height: 31rem;
   
   background-color: #e5ddcb;
   border-radius: 0.5rem;
@@ -60,7 +60,7 @@ export const FormComponents = styled.p`
 `;
 
 export const Footer = styled.div`
-  margin-top: 7.3rem;
+  margin-top: 6.5rem;
   text-align: center;
 `;
 

@@ -119,7 +119,8 @@ const ButtonLink = styled(Button)`
 const ButtonForm = styled(Button)`
 	width: 95%;
   border-radius: 5px;
-	color: ${getFormText};
+	padding: 10px 30px;
+  color: ${getFormText};
 	&:hover:enabled {
 		background-color: transparent;
 		color: ${getDarkColor};
