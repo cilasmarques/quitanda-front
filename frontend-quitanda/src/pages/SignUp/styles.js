@@ -11,19 +11,22 @@ export const Container = styled.div`
 `;
 
 export const BoxContainer = styled.div`
-  flex-direction: column;
-  text-align: center;
+  width: 90%;
+  height: 90%;
 
-  width: 71.5rem;
-  height: 42.8rem;
-  
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: auto;
+
   background-color: #e5ddcb;
-  border-radius: 0.5rem;
+  border-radius: 2%;
 `;
 
 export const Header = styled.header`
-  padding-top: 1.2rem;
-  padding-bottom: 1.5rem;
+  width: 100%;
+  text-align: center;
 `;
 
 export const Title = styled.h2`
@@ -40,20 +43,20 @@ export const Title = styled.h2`
 
 export const FormComponents = styled.div`
   width: 100%;
-  height: 28rem;
-  display: flex;
+  display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 5px;
 `;
 
 export const Footer = styled.div`
-  margin-top: 2rem;
-  height: 7rem;
-  display: flex;
+  width: 100%;
+  display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 2px;
 `;
 
 export const FormLink = styled.a`

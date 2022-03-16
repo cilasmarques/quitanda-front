@@ -5,7 +5,7 @@ import ButtonWrapper from "../../components/Button/Button";
 // STYLES
 import {
   Container,
-  LoginBox,
+  BoxContainer,
   Header,
   Title,
   Subtitle,
@@ -17,7 +17,7 @@ import {
 const SignInPage = () => {
   return (
     <Container>
-      <LoginBox>
+      <BoxContainer>
         <Header>
           <Title>Quitanda</Title>
           <Subtitle>Insira seu nome de usuário e sua senha nos campos abaixo</Subtitle>
@@ -30,9 +30,9 @@ const SignInPage = () => {
         </FormComponents>
 
         <Footer>
-          <span>Não tem uma conta? <FormLink>Crie uma!</FormLink> </span>
+          <span>Não tem uma conta? <FormLink href="/signup" >Crie uma!</FormLink> </span>
         </Footer>
-      </LoginBox>
+      </BoxContainer>
     </Container>
     );
 };

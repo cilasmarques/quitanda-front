@@ -30,8 +30,6 @@ const SignUpPage = () => {
     /*Fazer validação */
     setEmail(e.target.value)
   };
-  
-
 
   const firstScreen = (
     <Container>
@@ -85,12 +83,10 @@ const SignUpPage = () => {
   )
 
   return (
-    <Fragment>{switchScreen ? secondScreen : firstScreen}</Fragment>
+    <Fragment>
+      {switchScreen ? secondScreen : firstScreen}
+    </Fragment>
   );
 };
 
 export default SignUpPage;
-
-
-
-

@@ -38,10 +38,10 @@ const InputWrapper = (props) => {
     <Fragment>
       {showPassword ?
         <FaEyeSlash onClick={() => setShowPassword(false)}
-          style={{ position: 'absolute', alignSelf: 'end', marginLeft: '-4rem', marginTop: '0.5rem' }}
+          style={{ position: 'absolute', alignSelf: 'end', marginLeft: '-3%', marginTop: '0.5rem' }}
         /> :
         <FaEye onClick={() => setShowPassword(true)}
-          style={{ position: 'absolute', alignSelf: 'end', marginLeft: '-4rem', marginTop: '0.5rem' }}
+          style={{ position: 'absolute', alignSelf: 'end', marginLeft: '-3%', marginTop: '0.5rem' }}
         />
       }
     </Fragment>
