@@ -41,7 +41,20 @@ export const Title = styled.h2`
   text-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
 `;
 
-export const FormComponents = styled.div`
+export const Subtitle = styled.p`
+  color: #252733;
+  font-weight: 350;
+  font-size: 1rem;
+  font-family: "Mulish", "Roboto";
+  font-style: normal;
+  line-height: 1.8rem;
+  letter-spacing: 0.4px;
+  margin-top: 1rem;
+  text-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+`;
+
+
+export const FormComponents = styled.form`
   width: 100%;
   display: inline-flex;
   flex-wrap: wrap;

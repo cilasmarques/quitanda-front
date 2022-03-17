@@ -60,7 +60,7 @@ const InputWrapper = (props) => {
       return (
         <Container>
           <InputTitle>{props.placeholder}</InputTitle>
-          <Input {...props} />
+          <Input {...props}/>
         </Container>
       );
   };
