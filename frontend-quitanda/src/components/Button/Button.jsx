@@ -12,7 +12,8 @@ export const ButtonsVariants = {
 	default: 'default',
 	outlined: 'outlined',
 	link: 'link',
-  form: 'form'
+  form: 'form',
+  slim: 'slim'
 };
 
 const getMainColor = ({ theme, color }) => {
@@ -59,6 +60,14 @@ const getLinkText = (props) => {
 	};
 
 	return getMainColor(props);	
+};
+
+const getSlimText = (props) => {
+	if (props.color === ButtonColors.default) {
+		return "#FFFFFF";
+	};
+
+	return getMainColor(props);
 };
 
 const getColorText = ({ theme, color }) => {
@@ -127,6 +136,16 @@ const ButtonForm = styled(Button)`
 	};
 `;
 
+const ButtonSlim = styled(Button)`
+	font-size: 0.7rem;
+  border-radius: 5px;
+	padding: 1px 3px;
+  color: ${getSlimText};
+	&:hover:enabled {
+		background-color: transparent;
+		color: ${getDarkColor};
+	};
+`;
 
 const ButtonWrapper = (props) => {
 	switch (props.variant) {
@@ -136,10 +155,11 @@ const ButtonWrapper = (props) => {
 			return <ButtonLink {...props} />;
     case ButtonsVariants.form:
       return <ButtonForm {...props} />;
+    case ButtonsVariants.slim:
+      return <ButtonSlim {...props} />;
     default:
 			return <Button {...props} />;
 	};
-	
 };
 
 
