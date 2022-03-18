@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
-import Carousel from "../../components/Carousel/index";
+import Carousel from "../../components/Carousel/Carousel";
+
+import {
+  MdOutlineArrowForwardIos,
+  MdOutlineArrowBackIos,
+} from "react-icons/md";
 
 import docinho from "../../assets/docinho.jpeg";
 import povo from "../../assets/povo.jpeg";
@@ -8,11 +13,18 @@ import jarro from "../../assets/jarro.jpeg";
 
 import { Header } from "../../components/Header/Header";
 import { Container } from "../../components/Container/Container";
-import { Root, SearchInput, Content } from "./styles";
+import { Root, SearchInput, Content, CarouselButton } from "./styles";
 import { CarouselHeader } from "../../components/CarouselHeader/CarouselHeader";
 import Card, { CardBody, CardMedia } from "../../components/Card/Card";
 
 export const Dashboard = () => {
+  const [artistController, setArtistController] = useState(0);
+  const [eventController, setEventController] = useState(0);
+  const [productController, setProductController] = useState(0);
+  const artistRef = useRef();
+  const eventRef = useRef();
+  const productRef = useRef();
+
   return (
     <Root>
       <Header title="Dashboard" />
@@ -26,10 +38,32 @@ export const Dashboard = () => {
               </div>
             </div>
           </SearchInput>
+
+          <CarouselButton
+            onClick={() =>
+              setArtistController(artistRef.current.getActiveIndex() - 1)
+            }
+          >
+            <MdOutlineArrowBackIos />
+          </CarouselButton>
+          <CarouselButton
+            onClick={() =>
+              setArtistController(artistRef.current.getActiveIndex() + 1)
+            }
+          >
+            <MdOutlineArrowForwardIos />
+          </CarouselButton>
         </CarouselHeader>
 
         <Content>
-          <Carousel>
+          <Carousel move={artistController} carouselRef={artistRef}>
+            <Card title="Junin">
+              <CardMedia image={docinho} size="default" />
+              <CardBody color="black">
+                <h6>Artesão</h6>
+                <h6>Ver perfil</h6>
+              </CardBody>
+            </Card>
             <Card title="Junin">
               <CardMedia image={docinho} size="default" />
               <CardBody color="black">
@@ -85,9 +119,23 @@ export const Dashboard = () => {
               </div>
             </div>
           </SearchInput>
+          <CarouselButton
+            onClick={() =>
+              setEventController(eventRef.current.getActiveIndex() - 1)
+            }
+          >
+            <MdOutlineArrowBackIos />
+          </CarouselButton>
+          <CarouselButton
+            onClick={() =>
+              setEventController(eventRef.current.getActiveIndex() + 1)
+            }
+          >
+            <MdOutlineArrowForwardIos />
+          </CarouselButton>
         </CarouselHeader>
         <Content>
-          <Carousel>
+          <Carousel move={eventController} carouselRef={eventRef}>
             <Card title="Jogo Campinense x Treze">
               <CardMedia image={povo} size="default" />
               <CardBody color="black">
@@ -157,9 +205,24 @@ export const Dashboard = () => {
               </div>
             </div>
           </SearchInput>
+
+          <CarouselButton
+            onClick={() =>
+              setProductController(productRef.current.getActiveIndex() - 1)
+            }
+          >
+            <MdOutlineArrowBackIos />
+          </CarouselButton>
+          <CarouselButton
+            onClick={() =>
+              setProductController(productRef.current.getActiveIndex() + 1)
+            }
+          >
+            <MdOutlineArrowForwardIos />
+          </CarouselButton>
         </CarouselHeader>
         <Content>
-          <Carousel>
+          <Carousel move={productController} carouselRef={productRef}>
             <Card title="Cachaça artesanal">
               <CardMedia image={jarro} size="default" />
               <CardBody color="black">
@@ -175,7 +238,7 @@ export const Dashboard = () => {
                 <p> Ver Detalhes </p>
                 <p>Ver perfil do vendedor</p>
               </CardBody>
-            </Card>{" "}
+            </Card>
             <Card title="Cachaça artesanal">
               <CardMedia image={jarro} size="default" />
               <CardBody color="black">
@@ -183,7 +246,7 @@ export const Dashboard = () => {
                 <p> Ver Detalhes </p>
                 <p>Ver perfil do vendedor</p>
               </CardBody>
-            </Card>{" "}
+            </Card>
             <Card title="Cachaça artesanal">
               <CardMedia image={jarro} size="default" />
               <CardBody color="black">
@@ -191,7 +254,7 @@ export const Dashboard = () => {
                 <p> Ver Detalhes </p>
                 <p>Ver perfil do vendedor</p>
               </CardBody>
-            </Card>{" "}
+            </Card>
             <Card title="Cachaça artesanal">
               <CardMedia image={jarro} size="default" />
               <CardBody color="black">
@@ -199,7 +262,7 @@ export const Dashboard = () => {
                 <p> Ver Detalhes </p>
                 <p>Ver perfil do vendedor</p>
               </CardBody>
-            </Card>{" "}
+            </Card>
             <Card title="Cachaça artesanal">
               <CardMedia image={jarro} size="default" />
               <CardBody color="black">

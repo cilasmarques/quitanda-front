@@ -21,19 +21,18 @@ const getCardBodyText = (props) => {
 };
 
 const getCardMediaSize = (props) => {
-  console.log(props);
   if (props === CardMediaSizes.default) {
-    return 110;
+    return 120;
   }
 
-  return 120;
+  return 150;
 };
 
 //#region Card
 const StyledCard = styled.div`
   background: #ffffff;
   border: 1px solid #dfe0eb;
-
+  overflow-wrap: break-word;
   border-radius: 8px;
 
   display: flex;
@@ -42,11 +41,10 @@ const StyledCard = styled.div`
   justify-content: center;
   margin-right: 8px;
 
-  font-size: 1rem;
-  font-weight: 600;
-  width: 200px;
-
+  max-width: 250px;
+  max-height: 250px;
   padding: 10px 30px;
+
   cursor: pointer;
 `;
 

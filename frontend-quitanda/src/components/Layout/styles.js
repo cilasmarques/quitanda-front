@@ -14,4 +14,9 @@ export const Grid = styled.div`
 export const Content = styled.div`
   grid-area: CT;
   padding: 0.75rem 0.87rem 0.25rem 0.62rem;
+
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

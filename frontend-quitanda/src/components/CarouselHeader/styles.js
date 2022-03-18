@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   background: ${(props) => props.theme.colors.primary.container};
   border-radius: 0.3rem;
 `;

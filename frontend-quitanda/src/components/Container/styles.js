@@ -5,10 +5,12 @@ export const Wrapper = styled.div`
   flex-direction: column;
   flex: 1;
   align-items: flex-start;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   background: ${(props) => props.theme.colors.primary.container};
   border-radius: 0.3rem;
   padding: 0.3rem 0.8rem 0.3rem 0.8rem;
+
+  width: 100%;
 `;
 
 export const Title = styled.div`
