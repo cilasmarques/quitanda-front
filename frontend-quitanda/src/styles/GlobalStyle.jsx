@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	html, body, #root {
-		height: 100%;
+		height: 100vh;
 		background: url(${wallpaper}) no-repeat center center fixed; 
 		-webkit-background-size: cover;
 		-moz-background-size: cover;

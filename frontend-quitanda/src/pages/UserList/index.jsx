@@ -1,7 +1,9 @@
 import React from "react";
 
+import { Header } from "../../components/Header/Header";
+
 export const UserList = () => {
-  return <h1>UserList</h1>;
+  return <Header />;
 };
 
 export default UserList;

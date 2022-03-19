@@ -11,10 +11,11 @@ const light = {
     primary: {
       main: "#61210B",
       second: "#C25110",
-      light: "#E5DDCB",
-
+      container: "#E5DDCB",
       card: "#DFE0EB",
-      text: "#FFFFFF",
+      white: "#FFFFFF",
+      black: "#000000",
+      linktext: "#252733",
     },
     danger: {
       main: "#F12B2C",
