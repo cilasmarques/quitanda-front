@@ -5,27 +5,23 @@ import { BrowserRouter } from 'react-router-dom';
 
 // ENUMS
 import { LocalStorageKeys } from '../enums/local-storage-keys-enum';
+
 // COMPONENTS
-// import { DashboardRoutes } from './DashboardRoutes/router';
+import { DashboardRoutes } from './DashboardRoutes/router';
 import { AuthRoutes } from './AuthRoutes/router';
-import { ProductRoutes } from './ProductRoutes/router';
 
 export const Routes = () => {
-	// const { user } = useAuth();
+  // const { user } = useAuth();
 
-	const isAuthenticated = () => {
+  const isAuthenticated = () => {
     return true
-		// const userLocalStorage = !!localStorage.getItem(LocalStorageKeys.USER);
-		// return !!user || userLocalStorage;
-	};
+    // const userLocalStorage = !!localStorage.getItem(LocalStorageKeys.USER);
+    // return !!user || userLocalStorage;
+  };
 
-	return (
-		<BrowserRouter>
-      {/* <AuthRoutes /> */}
-      {/* <DashboardRoutes /> */}
-        {/* {isAuthenticated() ? <DashboardRoutes /> : <AuthRoutes />} */}
-        {isAuthenticated() ? <ProductRoutes/> : <AuthRoutes />}
-      {/* <ProductRoutes/> */}
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      {isAuthenticated() ? <DashboardRoutes /> : <AuthRoutes />}
+    </BrowserRouter>
+  );
 };

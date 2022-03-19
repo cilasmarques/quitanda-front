@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import InputWrapper from "../../components/Input/Input";
 import ButtonWrapper from "../../components/Button/Button";
 
@@ -19,7 +20,10 @@ import {
   Footer,
 } from "./styles";
 
+const REDIRECTION_PAGE = '/';
+
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -58,7 +62,7 @@ const SignUpPage = () => {
     const validFields_page2 = handleValidateField(businessDescription) && handleValidateField(socialNetwork1);
 
     if (validFields_page1 && validFields_page2) {
-      await addUser({
+      const result = await addUser({
         "username": username,
         "email": email,
         "password": password,
@@ -70,6 +74,10 @@ const SignUpPage = () => {
         "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : null,
         "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : null
       })
+
+      if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
+        navigate(REDIRECTION_PAGE);
+      }
     }
     else if (validFields_page1 && !validFields_page2)
       alert("Verifique todos os campos obrigatórios!");

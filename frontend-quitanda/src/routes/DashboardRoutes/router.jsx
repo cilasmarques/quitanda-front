@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 // PAGES
 import Profile from "../../pages/Profile";
+import Products from '../../pages/Products';
 import NotFound from "../../pages/NotFound";
 
 // ADMIN PAGES
@@ -19,6 +20,10 @@ export const DashboardRoutes = () => {
         <Route path="/perfil">
           <Route index element={<Profile />} />
           <Route path=":name/edit" element={<Profile />} />
+        </Route>
+
+        <Route path="/produtos"> {/* Só é acessada quando clica no botão de 'edit' na tela de perfil */}
+          <Route index element={<Products />} />
         </Route>
 
         <Route path="/admin/usuarios">

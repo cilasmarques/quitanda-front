@@ -10,7 +10,6 @@ import { CarouselContainer, Inner } from "./style";
 const Carousel = forwardRef(({ children, move, carouselRef }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  console.log(move);
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {

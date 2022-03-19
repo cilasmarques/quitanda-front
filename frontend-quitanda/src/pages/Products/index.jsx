@@ -117,7 +117,8 @@ const Products = () => {
       <BoxContainer>
         <Header>
           <Title>Produtos</Title>
-          <Subtitle>Campos com '*' são obrigatórios</Subtitle>
+          <Subtitle>Campos com '*' são obrigatórios.</Subtitle>
+          <Subtitle>Os produtos só serão exibidos na plataforma após validação da staff.</Subtitle>
         </Header>
 
         <FormComponents>
@@ -129,6 +130,8 @@ const Products = () => {
             <ButtonWrapper>Adicionar foto</ButtonWrapper>  {/* Botao de upload de imagem */}
             <ButtonWrapper onClick={handleAddProductsOnList}>Adicionar produto</ButtonWrapper>
           </ButtonsInline>
+
+          <Subtitle>Você tem {currentProductList.length} produtos cadastrados</Subtitle>
 
           <CardContent>
             {handleListProducts().map((cardlist, index) => (

@@ -11,7 +11,6 @@ export async function addUser(user) {
         // headers: {
         //   'Authorization': `Bearer ${localStorage.getItem(LocalStorageKeys.TOKEN)}`
         // },
-        withCredentials: true
       })
   } catch (error) {
     handleError(error);
@@ -29,7 +28,6 @@ export async function getAllUsers(sort_config, page) {
           "sort_config": sort_config,
           "page": page
         },
-        withCredentials: true
       })
   } catch (error) {
     handleError(error);
@@ -47,7 +45,6 @@ export async function getAllValidUsers(sort_config, page) {
           "sort_config": sort_config,
           "page": page
         },
-        withCredentials: true
       })
   } catch (error) {
     handleError(error);
@@ -66,7 +63,6 @@ export async function getAllInvalidUsers(sort_config, page) {
           "sort_config": sort_config,
           "page": page
         },
-        withCredentials: true
       })
   } catch (error) {
     handleError(error);
@@ -80,7 +76,6 @@ export async function getUserByUsername(userName) {
         // headers: {
         //   'Authorization': `Bearer ${localStorage.getItem(LocalStorageKeys.TOKEN)}`
         // },
-        withCredentials: true
       })
   } catch (error) {
     handleError(error);
@@ -94,7 +89,6 @@ export async function updateUserByUsername(userName, userData) {
         // headers: {
         //   'Authorization': `Bearer ${localStorage.getItem(LocalStorageKeys.TOKEN)}`
         // },
-        withCredentials: true
       })
   } catch (error) {
     handleError(error);
