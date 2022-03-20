@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputWrapper from "../../components/Input/Input";
 import ButtonWrapper from "../../components/Button/Button";
@@ -39,6 +39,7 @@ const Products = () => {
   const [productPrice, setProductPrice] = useState(0);
   const [initialProductList, setInitialProductList] = useState([]);
   const [currentProductList, setCurrentProductList] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   // useEffect(() => { //TODO - FAZER O FETCH AQUI
   //   const loadData = async () => {
@@ -59,6 +60,14 @@ const Products = () => {
     const validFields = handleValidateField(productName) && handleValidateField(productDescription) && handleValidateField(productPrice);
     const alreadyExists = currentProductList.find(product => product.name === productName && product.description === productDescription);
 
+    let image = "";
+    if (selectedImage) {
+      image = URL.createObjectURL(selectedImage);
+    } else {      
+      alert("Você esqueceu de adicionar uma imagem do produto!");
+      return
+    }
+
     if (!user) {
       alert("Você precisa estar registrado para adicionar um produto!");
       navigate(REDIRECTION_PAGE);
@@ -68,7 +77,7 @@ const Products = () => {
         'name': productName, 
         'description': productDescription, 
         'price': `R$: ${productPrice.toFixed(2)}`, 
-        'images':jarro,
+        'images': image,
         'user_id': user._id
       };
       setCurrentProductList(previousState => [...previousState, product]);
@@ -109,7 +118,7 @@ const Products = () => {
     currentProductList.map((product, index) => {
       cardList.push(
         <Card title={product.name} key={index}>
-          <CardMedia image={product.images} size="default" />
+          <CardMedia src={product.images} size="default" />
           <CardBody color="black">
             <p> Preço: {product.price} </p>
             <p> Descrição: {product.description} </p>
@@ -144,8 +153,8 @@ const Products = () => {
           <InputWrapper value={productPrice} placeholder='Preço do produto*' type="number" step="0.05" onChange={(e) => setProductPrice(+e.target.value)} />
 
           <ButtonsInline>
-            <ButtonWrapper>Adicionar foto</ButtonWrapper>  {/* Botao de upload de imagem */}
-            <ButtonWrapper onClick={handleAddProductsOnList}>Adicionar produto</ButtonWrapper>
+            <InputWrapper variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem do produto*" onChange={(e) => setSelectedImage(e.target.files[0])}/> 
+            <ButtonWrapper variant="slim" onClick={handleAddProductsOnList}>Adicionar produto</ButtonWrapper>
           </ButtonsInline>
 
           <Subtitle>Você tem {currentProductList.length} produtos cadastrados</Subtitle>

@@ -77,7 +77,8 @@ export const Dashboard = () => {
       productsList.map((product, index) => {
         cardList.push(
           <Card title={product.name} key={index}>
-            <CardMedia image={jarro} size="default" />  {/* TODO - pegar a imagem do backend*/}
+            {/* <CardMedia image={jarro} size="default" />  */} {/* TODO - pegar a imagem do backend*/}
+            <CardMedia src={product.images} />
             <CardBody color="black">
               <p> Preço: {product.price} </p>
               <p> Descrição: {product.description} </p>

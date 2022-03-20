@@ -139,7 +139,7 @@ const ButtonForm = styled(Button)`
 const ButtonSlim = styled(Button)`
 	font-size: 0.7rem;
   border-radius: 5px;
-	padding: 1px 3px;
+  padding: 6px 20px;
   color: ${getSlimText};
 	&:hover:enabled {
 		background-color: transparent;

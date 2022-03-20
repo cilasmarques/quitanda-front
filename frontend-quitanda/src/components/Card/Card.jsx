@@ -122,7 +122,7 @@ CardBody.propTypes = {
 //#endregion
 
 //#region CardMedia
-const StyledMedia = styled.div`
+const StyledMedia = styled.img`
   background-image: url(${(props) => props.image});
   background-position: center center;
   background-size: cover;
@@ -130,8 +130,8 @@ const StyledMedia = styled.div`
   width: ${(props) => getCardMediaSize(props.size)}px;
 `;
 
-export const CardMedia = ({ image, size }) => (
-  <StyledMedia image={image} size={size} />
+export const CardMedia = (props) => (
+  <StyledMedia {...props} />
 );
 
 CardMedia.defaultProps = {

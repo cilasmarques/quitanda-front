@@ -14,7 +14,7 @@ const Carousel = forwardRef(({ children, move, carouselRef }) => {
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
       newIndex = React.Children.count(children) - 1;
-    } else if (newIndex >= React.Children.count(children)) {
+    } else if (newIndex >= (React.Children.count(children) / 2) + 1) {
       newIndex = 0;
     }
     setActiveIndex(newIndex);

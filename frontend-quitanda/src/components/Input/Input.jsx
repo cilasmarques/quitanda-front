@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 export const InputVariants = {
   default: 'default',
-  password: 'password'
+  password: 'password',
+  file: 'file'
 };
 
 export const Container = styled.div`
@@ -31,6 +32,18 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
+const InputFile = styled.input`
+  display: none;
+`
+
+const InputFileLabel = styled.label`
+  background-color: #863e03;
+  border-radius: 5px;
+  color: #fff;
+  margin: 10px;
+  padding: 6px 20px;
+`
+
 const InputWrapper = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -55,6 +68,13 @@ const InputWrapper = (props) => {
           <Input {...props} type={showPassword ? 'input' : 'password'} /> 
           {faEye}
         </Container>
+      );
+    case InputVariants.file:
+      return (
+        <Fragment>
+          <InputFileLabel htmlFor='input-file'> {props.placeholder} </InputFileLabel>
+          <InputFile id='input-file' {...props} /> 
+        </Fragment>
       );
     default:
       return (
