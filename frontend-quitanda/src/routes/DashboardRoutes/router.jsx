@@ -5,10 +5,12 @@ import { Route, Routes } from "react-router-dom";
 import Profile from "../../pages/Profile";
 import Products from '../../pages/Products';
 import NotFound from "../../pages/NotFound";
+import Dashboard from "../../pages/Dashboard";
 
 // ADMIN PAGES
-import Dashboard from "../../pages/Dashboard";
 import UserList from "../../pages/UserList";
+
+// COMPONENTS
 import { Layout } from "../../components/Layout/Layout";
 
 export const DashboardRoutes = () => {
