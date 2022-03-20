@@ -89,7 +89,7 @@ export const CardContent = styled.div`
   align-items: center;
   overflow-x: hidden; /* Hide horizontal scrollbar */
   overflow-y: scroll; /* Add vertical scrollbar */
-  max-height: 37vh;
+  max-height: 35vh;
 `;
 
 export const CardRow = styled.div`

@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import InputWrapper from "../../components/Input/Input";
 import ButtonWrapper from "../../components/Button/Button";
 import Card, { CardBody, CardMedia } from "../../components/Card/Card";
 
 import jarro from "../../assets/jarro.jpeg";
+
+// ENUMS
+import {LocalStorageKeys} from "../../enums/local-storage-keys-enum";
+
+// SERVICES
+import { addProduct } from "../../services/ProductService.jsx";
 
 // UTILS
 import fieldsValidator from "../../utils/fieldsValidator";
@@ -22,35 +29,27 @@ import {
   Footer
 } from "./styles";
 
-const PRODUCTS = [
-  { 'name': 'Cachaça artesanal 0', 'description': 'descricao', 'price': 'R$30.00' },
-  { 'name': 'Cachaça artesanal 1', 'description': 'descricao', 'price': 'R$31.00' },
-  { 'name': 'Cachaça artesanal 2', 'description': 'descricao', 'price': 'R$32.00' },
-  { 'name': 'Cachaça artesanal 3', 'description': 'descricao', 'price': 'R$33.00' },
-  { 'name': 'Cachaça artesanal 4', 'description': 'descricao', 'price': 'R$34.00' },
-  { 'name': 'Cachaça artesanal 5', 'description': 'descricao', 'price': 'R$35.00' },
-  { 'name': 'Cachaça artesanal 6', 'description': 'descricao', 'price': 'R$36.00' },
-  { 'name': 'Cachaça artesanal 7', 'description': 'descricao', 'price': 'R$37.00' },
-  { 'name': 'Cachaça artesanal 8', 'description': 'descricao', 'price': 'R$38.00' },
-  { 'name': 'Cachaça artesanal 9', 'description': 'descricao', 'price': 'R$39.00' },
-];
+const REDIRECTION_PAGE = '/'
 
 const Products = () => {
+  const user = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
+  const navigate = useNavigate();
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState(0);
-  const [initialProductList, setInitialProductList] = useState(PRODUCTS);
-  const [currentProductList, setCurrentProductList] = useState(PRODUCTS);
+  const [initialProductList, setInitialProductList] = useState([]);
+  const [currentProductList, setCurrentProductList] = useState([]);
 
-  useEffect(() => { //TODO - FAZER O FETCH AQUI
-    setInitialProductList(PRODUCTS);
-    setCurrentProductList(PRODUCTS);
-  }, [PRODUCTS]);
+  // useEffect(() => { //TODO - FAZER O FETCH AQUI
+  //   const loadData = async () => {
+  //     let result = await getAllProducts("Ascending", 1);
+  //     let allProducts = result.data.products
+  //     setInitialProductList(allProducts);
+  //     setCurrentProductList(allProducts);
+  //   }
 
-  // useEffect(() => { //TODO - remover isso aqui
-  //   console.log(currentProductList);
-  //   console.log(initialProductList);
-  // }, [currentProductList, initialProductList]);
+  //   loadData();
+  // }, []);
 
   const handleValidateField = (field) => {
     return !fieldsValidator.isUndefined(field) && !fieldsValidator.isEmpty(field) && !fieldsValidator.isNumeric(field);
@@ -59,9 +58,15 @@ const Products = () => {
   const handleAddProductsOnList = () => {
     const validFields = handleValidateField(productName) && handleValidateField(productDescription) && handleValidateField(productPrice);
     const alreadyExists = currentProductList.find(product => product.name === productName && product.description === productDescription);
-
+    
     if (validFields && !alreadyExists) {
-      let product = { 'name': productName, 'description': productDescription, 'price': `R$: ${productPrice.toFixed(2)}` };
+      let product = { 
+        'name': productName, 
+        'description': productDescription, 
+        'price': `R$: ${productPrice.toFixed(2)}`, 
+        'images':jarro,
+        'user_id': user._id
+      };
       setCurrentProductList(previousState => [...previousState, product]);
     }
     else if (alreadyExists)
@@ -77,11 +82,14 @@ const Products = () => {
     }
   }
 
-  const handleAddProducts = () => { //TODO - implementar isso aqui
+  const handleAddProducts = async () => { //TODO - implementar isso aqui
     let removedProducts = initialProductList.filter(p => !currentProductList.includes(p));
     let addedProducts = currentProductList.filter(p => !initialProductList.includes(p));
-    console.log(removedProducts);
-    console.log(addedProducts);
+
+    let result = await addProduct(addedProducts);
+    if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
+      navigate(REDIRECTION_PAGE);
+    }
   }
 
   const handleListProducts = () => {
@@ -92,10 +100,10 @@ const Products = () => {
     currentProductList.map((product, index) => {
       cardList.push(
         <Card title={product.name} key={index}>
-          <CardMedia image={jarro} size="default" />
+          <CardMedia image={product.images} size="default" />
           <CardBody color="black">
             <p> Preço: {product.price} </p>
-            <p> Ver Detalhes </p>
+            <p> Descrição: {product.description} </p>
           </CardBody>
           <ButtonWrapper variant="slim" onClick={() => handleRemoveProductsOnList(product)}>Deletar</ButtonWrapper>
         </Card>
