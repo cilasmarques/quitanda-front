@@ -77,3 +77,8 @@ export const CarouselButton = styled.button`
     background-color: #c9c3b3;
   }
 `;
+
+export const CardRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
