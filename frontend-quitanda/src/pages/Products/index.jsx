@@ -58,8 +58,12 @@ const Products = () => {
   const handleAddProductsOnList = () => {
     const validFields = handleValidateField(productName) && handleValidateField(productDescription) && handleValidateField(productPrice);
     const alreadyExists = currentProductList.find(product => product.name === productName && product.description === productDescription);
-    
-    if (validFields && !alreadyExists) {
+
+    if (!user) {
+      alert("Você precisa estar registrado para adicionar um produto!");
+      navigate(REDIRECTION_PAGE);
+    }
+    else if (validFields && !alreadyExists && user._id) {
       let product = { 
         'name': productName, 
         'description': productDescription, 
@@ -72,7 +76,7 @@ const Products = () => {
     else if (alreadyExists)
       alert("Esse produto já está cadastrado");
     else
-      alert("Opa! alguma informção esta estranha :/");
+      alert("Opa! alguma informação está estranha :/");
   }
 
   const handleRemoveProductsOnList = (product) => {
@@ -86,9 +90,14 @@ const Products = () => {
     let removedProducts = initialProductList.filter(p => !currentProductList.includes(p));
     let addedProducts = currentProductList.filter(p => !initialProductList.includes(p));
 
-    let result = await addProduct(addedProducts);
-    if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
-      navigate(REDIRECTION_PAGE);
+    if (addedProducts.length > 0) {
+      let result = await addProduct(addedProducts);
+      if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
+        navigate(REDIRECTION_PAGE);
+      }
+    } 
+    else {
+      alert("Nenhum produto foi adicionado.");
     }
   }
 
