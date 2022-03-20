@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import InputWrapper from "../../components/Input/Input";
 import ButtonWrapper from "../../components/Button/Button";
 
+// ENUMS
+import {LocalStorageKeys} from "../../enums/local-storage-keys-enum";
+
 // UTILS
 import fieldsValidator from "../../utils/fieldsValidator";
 
@@ -20,7 +23,7 @@ import {
   Footer,
 } from "./styles";
 
-const REDIRECTION_PAGE = '/';
+const REDIRECTION_PAGE = '/produtos';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -76,6 +79,8 @@ const SignUpPage = () => {
       })
 
       if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
+        const user = result.data.new_user
+        localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(user));
         navigate(REDIRECTION_PAGE);
       }
     }

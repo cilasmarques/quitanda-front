@@ -14,6 +14,8 @@ import {
   FormLink
 } from "./styles";
 
+const REDIRECTION_PAGE = "/cadastro"
+
 const SignInPage = () => {
   return (
     <Container>
@@ -30,7 +32,7 @@ const SignInPage = () => {
         </FormComponents>
 
         <Footer>
-          <span>Não tem uma conta? <FormLink href="/signup" >Crie uma!</FormLink> </span>
+          <span>Não tem uma conta? <FormLink href={REDIRECTION_PAGE} >Crie uma!</FormLink> </span>
         </Footer>
       </BoxContainer>
     </Container>
