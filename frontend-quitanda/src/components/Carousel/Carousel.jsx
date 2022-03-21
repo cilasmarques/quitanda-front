@@ -10,12 +10,11 @@ import { CarouselContainer, Inner } from "./style";
 const Carousel = forwardRef(({ children, move, carouselRef }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  console.log(move);
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
-      newIndex = React.Children.count(children) - 1;
-    } else if (newIndex >= React.Children.count(children)) {
+      newIndex = React.Children.count(children) / 2 - 1;
+    } else if (newIndex >= React.Children.count(children) / 2) {
       newIndex = 0;
     }
     setActiveIndex(newIndex);
@@ -32,6 +31,9 @@ const Carousel = forwardRef(({ children, move, carouselRef }) => {
   );
 
   useEffect(() => {
+    const child = React.Children.toArray(children);
+
+    console.log("width", child);
     updateIndex(move);
   }, [move]);
 
@@ -54,7 +56,11 @@ const Carousel = forwardRef(({ children, move, carouselRef }) => {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <Inner style={{ transform: `translateX(-${activeIndex * 250}px)` }}>
+      <Inner
+        style={{
+          transform: `translateX(-${activeIndex * 250}px)`,
+        }}
+      >
         {children}
       </Inner>
     </CarouselContainer>

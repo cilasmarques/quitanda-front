@@ -18,6 +18,8 @@ export const DashboardRoutes = () => {
 
         <Route path="/perfil">
           <Route index element={<Profile />} />
+          <Route path=":name" element={<Profile />} />
+
           <Route path=":name/edit" element={<Profile />} />
         </Route>
 

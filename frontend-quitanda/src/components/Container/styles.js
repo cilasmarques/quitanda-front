@@ -9,8 +9,12 @@ export const Wrapper = styled.div`
   background: ${(props) => props.theme.colors.primary.container};
   border-radius: 0.3rem;
   padding: 0.3rem 0.8rem 0.3rem 0.8rem;
-
+  overflow: auto;
   width: 100%;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Title = styled.div`

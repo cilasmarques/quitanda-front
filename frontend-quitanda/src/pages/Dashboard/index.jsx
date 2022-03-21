@@ -7,15 +7,15 @@ import {
   MdOutlineArrowBackIos,
 } from "react-icons/md";
 
-import docinho from "../../assets/docinho.jpeg";
-import povo from "../../assets/povo.jpeg";
-import jarro from "../../assets/jarro.jpeg";
+import { art, event, products } from "./item";
 
+import { SearchInput } from "../../components/Input/SearchInput";
 import { Header } from "../../components/Header/Header";
 import { Container } from "../../components/Container/Container";
-import { Root, SearchInput, Content, CarouselButton } from "./styles";
-import { CarouselHeader } from "../../components/CarouselHeader/CarouselHeader";
+import { Root, Content, CarouselButton } from "./styles";
+import { ContainerHeader } from "../../components/ContainerHeader/ContainerHeader";
 import Card, { CardBody, CardMedia } from "../../components/Card/Card";
+import { Link } from "react-router-dom";
 
 export const Dashboard = () => {
   const [artistController, setArtistController] = useState(0);
@@ -30,7 +30,7 @@ export const Dashboard = () => {
       <Header title="Dashboard" />
 
       <Container>
-        <CarouselHeader title="Artistas">
+        <ContainerHeader title="Artistas">
           <SearchInput>
             <div className="search">
               <div>
@@ -53,65 +53,29 @@ export const Dashboard = () => {
           >
             <MdOutlineArrowForwardIos />
           </CarouselButton>
-        </CarouselHeader>
+        </ContainerHeader>
 
         <Content>
           <Carousel move={artistController} carouselRef={artistRef}>
-            <Card title="Junin">
-              <CardMedia image={docinho} size="default" />
-              <CardBody color="black">
-                <h6>Artesão</h6>
-                <h6>Ver perfil</h6>
-              </CardBody>
-            </Card>
-            <Card title="Junin">
-              <CardMedia image={docinho} size="default" />
-              <CardBody color="black">
-                <h6>Artesão</h6>
-                <h6>Ver perfil</h6>
-              </CardBody>
-            </Card>
-            <Card title="Junin">
-              <CardMedia image={docinho} size="default" />
-              <CardBody color="black">
-                <h6>Artesão</h6>
-                <h6>Ver perfil</h6>
-              </CardBody>
-            </Card>
-            <Card title="Junin">
-              <CardMedia image={docinho} size="default" />
-              <CardBody color="black">
-                <h6>Artesão</h6>
-                <h6>Ver perfil</h6>
-              </CardBody>
-            </Card>
-            <Card title="Junin">
-              <CardMedia image={docinho} size="default" />
-              <CardBody color="black">
-                <h6>Artesão</h6>
-                <h6>Ver perfil</h6>
-              </CardBody>
-            </Card>
-            <Card title="Junin">
-              <CardMedia image={docinho} size="default" />
-              <CardBody color="black">
-                <h6>Artesão</h6>
-                <h6>Ver perfil</h6>
-              </CardBody>
-            </Card>
-            <Card title="Junin">
-              <CardMedia image={docinho} size="default" />
-              <CardBody color="black">
-                <h6>Artesão</h6>
-                <h6>Ver perfil</h6>
-              </CardBody>
-            </Card>
+            {art.map((a, index) => {
+              return (
+                <Card key={index} title={a.title}>
+                  <CardMedia image={a.image} size={a.size} />
+                  <CardBody color={a.color}>
+                    <h6>{a.superTitle}</h6>
+                    <Link to={`/profile/${a.link}`}>
+                      <h6>{a.link}</h6>
+                    </Link>
+                  </CardBody>
+                </Card>
+              );
+            })}
           </Carousel>
         </Content>
       </Container>
 
       <Container>
-        <CarouselHeader title="Eventos">
+        <ContainerHeader title="Eventos">
           <SearchInput>
             <div className="search">
               <div>
@@ -133,71 +97,28 @@ export const Dashboard = () => {
           >
             <MdOutlineArrowForwardIos />
           </CarouselButton>
-        </CarouselHeader>
+        </ContainerHeader>
         <Content>
           <Carousel move={eventController} carouselRef={eventRef}>
-            <Card title="Jogo Campinense x Treze">
-              <CardMedia image={povo} size="default" />
-              <CardBody color="black">
-                <p>Local: Amigão </p>
-                <p>Data e hora: 20/02/22 15:00</p>
-                <p> Ver Detalhes </p>
-              </CardBody>
-            </Card>
-            <Card title="Jogo Campinense x Treze">
-              <CardMedia image={povo} size="default" />
-              <CardBody color="black">
-                <p>Local: Amigão </p>
-                <p>Data e hora: 20/02/22 15:00</p>
-                <p> Ver Detalhes </p>
-              </CardBody>
-            </Card>
-            <Card title="Jogo Campinense x Treze">
-              <CardMedia image={povo} size="default" />
-              <CardBody color="black">
-                <p>Local: Amigão </p>
-                <p>Data e hora: 20/02/22 15:00</p>
-                <p> Ver Detalhes </p>
-              </CardBody>
-            </Card>
-            <Card title="Jogo Campinense x Treze">
-              <CardMedia image={povo} size="default" />
-              <CardBody color="black">
-                <p>Local: Amigão </p>
-                <p>Data e hora: 20/02/22 15:00</p>
-                <p> Ver Detalhes </p>
-              </CardBody>
-            </Card>
-            <Card title="Jogo Campinense x Treze">
-              <CardMedia image={povo} size="default" />
-              <CardBody color="black">
-                <p>Local: Amigão </p>
-                <p>Data e hora: 20/02/22 15:00</p>
-                <p> Ver Detalhes </p>
-              </CardBody>
-            </Card>
-            <Card title="Jogo Campinense x Treze">
-              <CardMedia image={povo} size="default" />
-              <CardBody color="black">
-                <p>Local: Amigão </p>
-                <p>Data e hora: 20/02/22 15:00</p>
-                <p> Ver Detalhes </p>
-              </CardBody>
-            </Card>
-            <Card title="Jogo Campinense x Treze">
-              <CardMedia image={povo} size="default" />
-              <CardBody color="black">
-                <p>Local: Amigão </p>
-                <p>Data e hora: 20/02/22 15:00</p>
-                <p> Ver Detalhes </p>
-              </CardBody>
-            </Card>
+            {art.map((a, index) => {
+              return (
+                <Card key={index} title={a.title}>
+                  <CardMedia image={a.image} size={a.size} />
+                  <CardBody color={a.color}>
+                    <h6>{a.superTitle}</h6>
+                    <Link to={`/profile/${a.link}`}>
+                      <h6>{a.link}</h6>
+                    </Link>
+                  </CardBody>
+                </Card>
+              );
+            })}
           </Carousel>
         </Content>
       </Container>
 
       <Container>
-        <CarouselHeader title="Produtos">
+        <ContainerHeader title="Produtos">
           <SearchInput>
             <div className="search">
               <div>
@@ -220,57 +141,22 @@ export const Dashboard = () => {
           >
             <MdOutlineArrowForwardIos />
           </CarouselButton>
-        </CarouselHeader>
+        </ContainerHeader>
         <Content>
           <Carousel move={productController} carouselRef={productRef}>
-            <Card title="Cachaça artesanal">
-              <CardMedia image={jarro} size="default" />
-              <CardBody color="black">
-                <p>Preço: R$30,00 </p>
-                <p> Ver Detalhes </p>
-                <p>Ver perfil do vendedor</p>
-              </CardBody>
-            </Card>
-            <Card title="Cachaça artesanal">
-              <CardMedia image={jarro} size="default" />
-              <CardBody color="black">
-                <p>Preço: R$30,00 </p>
-                <p> Ver Detalhes </p>
-                <p>Ver perfil do vendedor</p>
-              </CardBody>
-            </Card>
-            <Card title="Cachaça artesanal">
-              <CardMedia image={jarro} size="default" />
-              <CardBody color="black">
-                <p>Preço: R$30,00 </p>
-                <p> Ver Detalhes </p>
-                <p>Ver perfil do vendedor</p>
-              </CardBody>
-            </Card>
-            <Card title="Cachaça artesanal">
-              <CardMedia image={jarro} size="default" />
-              <CardBody color="black">
-                <p>Preço: R$30,00 </p>
-                <p> Ver Detalhes </p>
-                <p>Ver perfil do vendedor</p>
-              </CardBody>
-            </Card>
-            <Card title="Cachaça artesanal">
-              <CardMedia image={jarro} size="default" />
-              <CardBody color="black">
-                <p>Preço: R$30,00 </p>
-                <p> Ver Detalhes </p>
-                <p>Ver perfil do vendedor</p>
-              </CardBody>
-            </Card>
-            <Card title="Cachaça artesanal">
-              <CardMedia image={jarro} size="default" />
-              <CardBody color="black">
-                <p>Preço: R$30,00 </p>
-                <p> Ver Detalhes </p>
-                <p>Ver perfil do vendedor</p>
-              </CardBody>
-            </Card>
+            {art.map((a, index) => {
+              return (
+                <Card key={index} title={a.title}>
+                  <CardMedia image={a.image} size={a.size} />
+                  <CardBody color={a.color}>
+                    <h6>{a.superTitle}</h6>
+                    <Link to={`/profile/${a.link}`}>
+                      <h6>{a.link}</h6>
+                    </Link>
+                  </CardBody>
+                </Card>
+              );
+            })}
           </Carousel>
         </Content>
       </Container>

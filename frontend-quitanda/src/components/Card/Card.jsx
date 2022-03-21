@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const CardBodyText = {
   default: "default",
@@ -25,7 +26,7 @@ const getCardMediaSize = (props) => {
     return 120;
   }
 
-  return 150;
+  return 140;
 };
 
 //#region Card
@@ -44,8 +45,6 @@ const StyledCard = styled.div`
   max-width: 250px;
   max-height: 250px;
   padding: 10px 30px;
-
-  cursor: pointer;
 `;
 
 const StyledCardTitle = styled.p`
@@ -58,7 +57,7 @@ const StyledCardTitle = styled.p`
   text-align: center;
   letter-spacing: 0.4px;
   color: #9fa2b4;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 
 const Card = ({ title, children }) => (
@@ -88,6 +87,10 @@ const StyledBody = styled.div`
   color: ${(props) => getCardBodyText(props.color)};
   padding: 5px 0;
 
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
   p {
     font-family: "Mulish";
     font-style: normal;

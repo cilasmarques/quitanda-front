@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // STYLES
 import { Container, TitleContainer, Controllers } from "./styles";
 
-export const CarouselHeader = ({ title, children }) => {
+export const ContainerHeader = ({ title, children }) => {
   return (
     <Container>
       <TitleContainer>
@@ -16,12 +16,12 @@ export const CarouselHeader = ({ title, children }) => {
   );
 };
 
-CarouselHeader.defaultProps = {
+ContainerHeader.defaultProps = {
   title: "Error",
   children: undefined,
 };
 
-CarouselHeader.propTypes = {
+ContainerHeader.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
 };
