@@ -11,7 +11,9 @@ export const ButtonColors = {
 export const ButtonsVariants = {
 	default: 'default',
 	outlined: 'outlined',
-	link: 'link'
+	link: 'link',
+  form: 'form',
+  slim: 'slim'
 };
 
 const getMainColor = ({ theme, color }) => {
@@ -44,12 +46,28 @@ const getOutlinedText = (props) => {
 	return getMainColor(props);
 };
 
+const getFormText = (props) => {
+	if (props.color === ButtonColors.default) {
+		return "#FFFFFF";
+	};
+
+	return getMainColor(props);
+};
+
 const getLinkText = (props) => {
 	if (props.color === ButtonColors.default) {
 		return "#757575";
 	};
 
 	return getMainColor(props);	
+};
+
+const getSlimText = (props) => {
+	if (props.color === ButtonColors.default) {
+		return "#FFFFFF";
+	};
+
+	return getMainColor(props);
 };
 
 const getColorText = ({ theme, color }) => {
@@ -106,16 +124,42 @@ const ButtonLink = styled(Button)`
 	};
 `;
 
+
+const ButtonForm = styled(Button)`
+	width: 95%;
+  border-radius: 5px;
+	padding: 10px 30px;
+  color: ${getFormText};
+	&:hover:enabled {
+		background-color: transparent;
+		color: ${getDarkColor};
+	};
+`;
+
+const ButtonSlim = styled(Button)`
+	font-size: 0.7rem;
+  border-radius: 5px;
+  padding: 6px 20px;
+  color: ${getSlimText};
+	&:hover:enabled {
+		background-color: transparent;
+		color: ${getDarkColor};
+	};
+`;
+
 const ButtonWrapper = (props) => {
 	switch (props.variant) {
 		case ButtonsVariants.outlined:
 			return <ButtonOutlined {...props} />;
 		case ButtonsVariants.link:
 			return <ButtonLink {...props} />;
-		default:
+    case ButtonsVariants.form:
+      return <ButtonForm {...props} />;
+    case ButtonsVariants.slim:
+      return <ButtonSlim {...props} />;
+    default:
 			return <Button {...props} />;
 	};
-	
 };
 
 

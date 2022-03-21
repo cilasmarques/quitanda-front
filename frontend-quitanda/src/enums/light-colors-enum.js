@@ -8,4 +8,5 @@ export const LightColors = Object.freeze({
   SUCCESS: "#03bb85",
   INFO: "#3b5998",
   WARNING: "#ff6961",
+  CONTAINER: "#e5ddcb"
 });

@@ -3,11 +3,14 @@ import { Route, Routes } from "react-router-dom";
 
 // PAGES
 import Profile from "../../pages/Profile";
+import Products from '../../pages/Products';
 import NotFound from "../../pages/NotFound";
+import Dashboard from "../../pages/Dashboard";
 
 // ADMIN PAGES
-import Dashboard from "../../pages/Dashboard";
 import UserList from "../../pages/UserList";
+
+// COMPONENTS
 import { Layout } from "../../components/Layout/Layout";
 
 export const DashboardRoutes = () => {
@@ -21,6 +24,10 @@ export const DashboardRoutes = () => {
           <Route path=":name" element={<Profile />} />
 
           <Route path=":name/edit" element={<Profile />} />
+        </Route>
+
+        <Route path="/produtos"> {/* Só é acessada quando clica no botão de 'edit' na tela de perfil */}
+          <Route index element={<Products />} />
         </Route>
 
         <Route path="/admin/usuarios">

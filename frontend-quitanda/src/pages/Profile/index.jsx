@@ -100,7 +100,7 @@ export const Profile = () => {
                     <CardMedia image={a.image} size={a.size} />
                     <CardBody color={a.color}>
                       <h6>{a.superTitle}</h6>
-                      <Link to={`/profile/${a.link}`}>
+                      <Link to={`/perfil`}>
                         <h6>{a.link}</h6>
                       </Link>
                     </CardBody>

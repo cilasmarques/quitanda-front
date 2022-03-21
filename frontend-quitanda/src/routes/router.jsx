@@ -8,20 +8,20 @@ import { LocalStorageKeys } from '../enums/local-storage-keys-enum';
 
 // COMPONENTS
 import { DashboardRoutes } from './DashboardRoutes/router';
-// import { AuthRoutes } from './AuthRoutes/router';
+import { AuthRoutes } from './AuthRoutes/router';
 
 export const Routes = () => {
-	// const { user } = useAuth();
+  // const { user } = useAuth();
 
-	const isAuthenticated = () => {
-		const userLocalStorage = !!localStorage.getItem(LocalStorageKeys.USER);
-		return !!user || userLocalStorage;
-	};
+  const isAuthenticated = () => {
+    return false
+    // const userLocalStorage = !!localStorage.getItem(LocalStorageKeys.USER);
+    // return !!user || userLocalStorage;
+  };
 
-	return (
-		<BrowserRouter>
-		<DashboardRoutes />
-			{/* {isAuthenticated() ? <DashboardRoutes /> : <AuthRoutes />} */}
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      {isAuthenticated() ? <DashboardRoutes /> : <AuthRoutes />}
+    </BrowserRouter>
+  );
 };
