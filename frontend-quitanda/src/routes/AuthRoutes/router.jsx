@@ -23,7 +23,9 @@ export const AuthRoutes = () => {
         <Route path=":name/edit" element={<Layout> <SignUpPage /> </Layout>} />
         <Route path=":name/edit/produtos" element={<Layout> <Products /> </Layout>} />
       </Route>
-      <Route path="/userList" element={<Layout> <UserList /> </Layout>} />
+
+      <Route path="/usuarios" element={<Layout> <UserList /> </Layout>} />
+
       <Route path="/login" element={<SignInPage />} />
       <Route path="/cadastro" element={<SignUpPage />} />
       <Route path="/produtos" element={<Products />} />

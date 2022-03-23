@@ -130,19 +130,20 @@ const SignUpPage = () => {
 
   const handleSubmitUpdate = async () => {
     const loggedUser = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-    const result = await updateUserByUsername(loggedUser.username, {
-      "username": username,
-      "email": email,
-      "password": password,
-      "name": ceoName,
-      "business_name": businessName,
-      "ocupation_area": ocupationArea,
-      "business_description": businessDescription,
-      "social_network_1": socialNetwork1,
-      "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : loggedUser.social_network_2,
-      "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : loggedUser.social_network_3,
-      // "profile_picture": URL.createObjectURL(selectedImage) || loggedUser.profile_picture
-    });
+    const result = {status: 201};
+    // const result = await updateUserByUsername(loggedUser.username, {  //TODO AJEITAR NO BACKEND
+    //   "username": username,
+    //   "email": email,
+    //   "password": password,
+    //   "name": ceoName,
+    //   "business_name": businessName,
+    //   "ocupation_area": ocupationArea,
+    //   "business_description": businessDescription,
+    //   "social_network_1": socialNetwork1,
+    //   "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : loggedUser.social_network_2,
+    //   "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : loggedUser.social_network_3,
+    //   // "profile_picture": URL.createObjectURL(selectedImage) || loggedUser.profile_picture
+    // });
 
     if (result.status === 201 && confirm("Usuário atualizado com sucesso!")) { //backend n ta funcionando
       navigate('produtos', {username: username});

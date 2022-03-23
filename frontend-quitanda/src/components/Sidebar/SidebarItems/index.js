@@ -3,7 +3,7 @@ import { FaUsers, FaUserTie } from "react-icons/fa";
 
 // ENUMS
 import { LocalStorageKeys } from "../../../enums/local-storage-keys-enum";
-console.log(localStorage.getItem(LocalStorageKeys.USER));
+const user = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
 
 const SidebarItems = [
   {
@@ -13,7 +13,7 @@ const SidebarItems = [
   },
   {
     name: "Perfil",
-    route: `/perfil/${JSON.parse(localStorage.getItem(LocalStorageKeys.USER)).username}`,
+    route: (user ? `/perfil/${user.username}` : 'perfil'),
     icon: FaUserTie,
   },
   {

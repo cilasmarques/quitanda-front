@@ -5,9 +5,6 @@ import { Header } from "../../components/Header/Header";
 import { Root } from "../Dashboard/styles";
 import { Coluns, Content, Description } from "./styles";
 
-
-
-
 export const UserList = () => {
   const handleListUsers = () => {
     const userList = [{
@@ -46,6 +43,7 @@ export const UserList = () => {
       '_created_at': 1647882052.0636673,
       '_id': "5f89065ec8533460120411d249f2d67bc8cbb1b2"
     }]
+
     let rowList = [];
     if(userList){
       userList.map((user, index) => {
@@ -55,7 +53,8 @@ export const UserList = () => {
       });
     }
     return rowList;
-  }
+  };
+
   return (
     <Root>
       <Header title="UserList" />
@@ -69,10 +68,9 @@ export const UserList = () => {
           <h3>OutraCoisa</h3>
           <h3>Actions</h3>
         </Coluns>
-        <Users>
+        {/* <Users>
           {handleListUsers().map((rowList) => rowList)}
-        </Users>
-
+        </Users> */}
       </Container>
     </Root>
   );
