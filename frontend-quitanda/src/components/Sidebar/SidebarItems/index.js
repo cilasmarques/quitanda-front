@@ -13,7 +13,6 @@ const SidebarItems = [
   },
   {
     name: "Perfil",
-    route: `/perfil`,
     route: `/perfil/${JSON.parse(localStorage.getItem(LocalStorageKeys.USER)).username}`,
     icon: FaUserTie,
   },

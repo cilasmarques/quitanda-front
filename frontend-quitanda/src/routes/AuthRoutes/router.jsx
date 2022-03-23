@@ -7,9 +7,11 @@ import SignUpPage from '../../pages/SignUp';
 import Products from '../../pages/Products';
 import Profile from "../../pages/Profile";
 import NotFound from '../../pages/NotFound';
+import UserList from '../../pages/UserList';
 
 // COMPONENTS
 import { Layout } from "../../components/Layout/Layout";
+
 
 export const AuthRoutes = () => {
   return (
@@ -21,7 +23,7 @@ export const AuthRoutes = () => {
         <Route path=":name/edit" element={<Layout> <SignUpPage /> </Layout>} />
         <Route path=":name/edit/produtos" element={<Layout> <Products /> </Layout>} />
       </Route>
-
+      <Route path="/userList" element={<Layout> <UserList /> </Layout>} />
       <Route path="/login" element={<SignInPage />} />
       <Route path="/cadastro" element={<SignUpPage />} />
       <Route path="/produtos" element={<Products />} />
