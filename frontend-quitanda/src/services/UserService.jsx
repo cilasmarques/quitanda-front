@@ -53,7 +53,7 @@ export async function getUserByUsername(userName) {
 
 export async function updateUserByUsername(userName, userData) {
   try {
-    return await axios.put(`${url}/user/${userName}`, {
+    return await axios.patch(`${url}/user/${userName}`, {
       // headers: { 'Authorization': `Bearer ${localStorage.getItem(LocalStorageKeys.TOKEN)}` },
       body: userData,
     });

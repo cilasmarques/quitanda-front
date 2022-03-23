@@ -33,10 +33,10 @@ export const Dashboard = () => {
   const productRef = useRef();
 
   const [usersList, setUsersList] = useState([
-    { name: "teste", ocupation_area: "teste" },
+    { name: "loading", ocupation_area: "loading" },
   ]);
   const [productsList, setProductsList] = useState([
-    { name: "teste", description: "teste", price: "2" },
+    { name: "loading", description: "loading", price: "R$: 0.00" },
   ]);
   const [eventsList, setEventsList] = useState([]);
 
@@ -54,20 +54,17 @@ export const Dashboard = () => {
 
   const handleListUsers = () => {
     let cardList = [];
-    let listLimit = 15;
 
     if (usersList) {
       usersList.map((user, index) => {
         cardList.push(
           <Card title={user.name} key={index}>
             <CardMedia src={user.profile_picture} />
-            {/* TODO - pegar a imagem do backend*/}
             <CardBody color="black">
               <p> {user.ocupation_area} </p>
               <Link to={`/perfil/${user.username}`}>
                 <p> Ver Detalhes </p>
               </Link>
-              {/* TODO - colocar Link de redirecionamento  */}
             </CardBody>
           </Card>
         );
@@ -78,14 +75,11 @@ export const Dashboard = () => {
 
   const handleListProducts = () => {
     let cardList = [];
-    let listLimit = 15;
 
     if (productsList) {
       productsList.map((product, index) => {
         cardList.push(
           <Card title={product.name} key={index}>
-            {/* <CardMedia image={jarro} size="default" />  */}
-            {/* TODO - pegar a imagem do backend*/}
             <CardMedia src={product.images} />
             <CardBody color="black">
               <p> Preço: {product.price} </p>
@@ -93,7 +87,6 @@ export const Dashboard = () => {
               <Link to={`/perfil/`} >
                 <p> Ver Detalhes </p>
               </Link>
-              {/* TODO - colocar Link de redirecionamento  */}
             </CardBody>
           </Card>
         );
@@ -116,18 +109,10 @@ export const Dashboard = () => {
             </div>
           </SearchInput>
 
-          <CarouselButton
-            onClick={() =>
-              setArtistController(artistRef.current.getActiveIndex() - 1)
-            }
-          >
+          <CarouselButton onClick={() => setArtistController(artistRef.current.getActiveIndex() - 1)}>
             <MdOutlineArrowBackIos />
           </CarouselButton>
-          <CarouselButton
-            onClick={() =>
-              setArtistController(artistRef.current.getActiveIndex() + 1)
-            }
-          >
+          <CarouselButton onClick={() => setArtistController(artistRef.current.getActiveIndex() + 1)}>
             <MdOutlineArrowForwardIos />
           </CarouselButton>
         </ContainerHeader>

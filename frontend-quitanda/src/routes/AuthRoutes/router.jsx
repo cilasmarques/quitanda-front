@@ -18,6 +18,8 @@ export const AuthRoutes = () => {
 
       <Route path="/perfil">
         <Route path=":name" element={<Layout> <Profile /> </Layout>} />
+        <Route path=":name/edit" element={<Layout> <SignUpPage /> </Layout>} />
+        <Route path=":name/edit/produtos" element={<Layout> <Products /> </Layout>} />
       </Route>
 
       <Route path="/login" element={<SignInPage />} />

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { Header } from "../../components/Header/Header";
 import { Container } from "../../components/Container/Container";
-import docinho from "../../assets/docinho.jpeg";
+import ButtonWrapper from "../../components/Button/Button";
+
+// ENUMS
+import { LocalStorageKeys } from "../../enums/local-storage-keys-enum";
 
 import Card, { CardMedia, CardBody } from "../../components/Card/Card";
 import {
@@ -31,60 +34,69 @@ const override = css`
 
 export const Profile = () => {
   const { name } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [userProducts, setUserProducts] = useState([]);
-  const [userData, setUserData] = useState([]);
+  const [profileProducts, setProfileProducts] = useState([]);
+  const [profileData, setProfileData] = useState([]);
+  const [loggedUserData, setLoggedUserData] = useState({}); //So um teste: localStorage.setItem("@user", JSON.stringify({'_id': '205f154a88fecf6e78f1bdae9c08848d3f72dd72', username:"tecendoredes", name:"Fátima Batista"}))
 
   useEffect(() => {
     const loadData = async () => {
       const result = await getProductsByUser(name);
-      console.log(result.data);
-      setUserData(result.data.user_products);
-      setUserProducts(result.data.user_products.products);
+      setProfileData(result.data.user_products);
+      setProfileProducts(result.data.user_products.products);
+
+      const userData = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
+      if (userData)
+        setLoggedUserData(userData);
     }
     loadData();
   }, []);
+
+
+  const handleEditProfile = () => {
+    navigate(`edit`, {name: name});
+  }
+
+  const handleReportUser = () => {
+    alert("Usuário reportado");
+  }
 
   return (
     <Root>
       <Header title="Perfil" />
       <Container>
         <ContainerHeader title="Sobre" />
-
         <Content>
-          <Card title={userData.business_name}>
-            <CardMedia src={userData.profile_picture}/>
+          <Card title={profileData.business_name}>
+            <CardMedia src={profileData.profile_picture} />
           </Card>
 
           <Description>
-            <h3>{userData.business_description}</h3>
-            {/* <AddressInfo> */}
-              {/* <span>CEP: 58410-258 </span> */}
-              {/* <span>Rua: Aluisio Cunha Lima,450</span> */}
-              {/* <span>Bairro: Catolé</span> */}
-            {/* </AddressInfo> */}
+            <h3>{profileData.business_description}</h3>
             <SocialNetworkInfo>
-              {/* <span>Numero de contato: (83) 9.9999-9999 </span> */}
-              <span> Link rede social 01: {userData.social_network_1}</span>
-              {/* <span> Link rede social 02: instagram@</span> */}
-              {/* <span> Link rede social 03: instagram@</span> */}
+              <span> Link rede social 01: {profileData.social_network_1}</span>
+              {profileData.social_network_2 && <span> Link rede social 02: {profileData.social_network_2}</span>}
+              {profileData.social_network_3 && <span> Link rede social 03: {profileData.social_network_3}</span>}
             </SocialNetworkInfo>
           </Description>
 
           <Description>
             <h3> Dados de Validação</h3>
             <AdminInfo>
-              <span>Email: {userData.email}</span>
-              {/* <span>Senha</span> */}
-              <span>Responsavel : {userData.name}</span>
-              <span>Ramo de atividade: {userData.ocupation_area}</span>
-              {/* <span>Comprovante MEI</span> */}
-              {/* <span>CPF/CNPJ</span> */}
-              {/* <span>Data de nascimento</span> */}
+              <span>Email: {profileData.email}</span>
+              <span>Responsavel : {profileData.name}</span>
+              <span>Ramo de atividade: {profileData.ocupation_area}</span>
             </AdminInfo>
           </Description>
+
+          <Controllers>
+            {(loggedUserData.username === name) ?
+              <ButtonWrapper variant="slim" onClick={handleEditProfile}> Edit </ButtonWrapper> :
+              <ButtonWrapper variant="slim" onClick={handleReportUser}> Report </ButtonWrapper>
+            }
+          </Controllers>
         </Content>
-        <Controllers></Controllers>
       </Container>
 
       <Container>
@@ -97,7 +109,7 @@ export const Profile = () => {
             </div>
           </SearchInput>
         </ContainerHeader>
-        
+
         <ProductContainer>
           {loading ? (
             <SyncLoader
@@ -108,11 +120,10 @@ export const Profile = () => {
             />
           ) : (
             <>
-              {userProducts.map((product, index) => {
-                // console.log(product);
+              {profileProducts.map((product, index) => {
                 return (
                   <Card key={index} title={product.name}>
-                    <CardMedia src={product.images}  />
+                    <CardMedia src={product.images} />
                     <CardBody>
                       <p>{product.price}</p>
                       <p>{product.description}</p>

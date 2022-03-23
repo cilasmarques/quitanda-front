@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import InputWrapper from "../../components/Input/Input";
 import ButtonWrapper from "../../components/Button/Button";
 import Card, { CardBody, CardMedia } from "../../components/Card/Card";
 
-import jarro from "../../assets/jarro.jpeg";
-
 // ENUMS
-import {LocalStorageKeys} from "../../enums/local-storage-keys-enum";
+import { LocalStorageKeys } from "../../enums/local-storage-keys-enum";
 
 // SERVICES
-import { addProduct } from "../../services/ProductService.jsx";
+import { addProduct, getProductsByUser } from "../../services/ProductService.jsx";
 
 // UTILS
 import fieldsValidator from "../../utils/fieldsValidator";
@@ -33,6 +31,7 @@ const REDIRECTION_PAGE = '/'
 
 const Products = () => {
   const user = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
+  const { name } = useParams();
   const navigate = useNavigate();
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
@@ -40,52 +39,52 @@ const Products = () => {
   const [initialProductList, setInitialProductList] = useState([]);
   const [currentProductList, setCurrentProductList] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isEditionRequest, setIsEditionRequest] = useState(false);
 
-  // useEffect(() => { //TODO - FAZER O FETCH AQUI
-  //   const loadData = async () => {
-  //     let result = await getAllProducts("Ascending", 1);
-  //     let allProducts = result.data.products
-  //     setInitialProductList(allProducts);
-  //     setCurrentProductList(allProducts);
-  //   }
+  useEffect(() => {
+    const loadData = async () => {
+      if (user && user.username === name) {
+        const result = await getProductsByUser(name);
+        const products = result.data.user_products.products
 
-  //   loadData();
-  // }, []);
+        setIsEditionRequest(true);
+
+        setInitialProductList(products);
+        setCurrentProductList(products);
+      }
+    }
+    loadData();
+  }, []);
 
   const handleValidateField = (field) => {
-    return !fieldsValidator.isUndefined(field) && !fieldsValidator.isEmpty(field) && !fieldsValidator.isNumeric(field);
+    return !fieldsValidator.isUndefined(field) && !fieldsValidator.isEmpty(field);
   };
 
   const handleAddProductsOnList = () => {
     const validFields = handleValidateField(productName) && handleValidateField(productDescription) && handleValidateField(productPrice);
-    const alreadyExists = currentProductList.find(product => product.name === productName && product.description === productDescription);
-
-    let image = "";
-    if (selectedImage) {
-      image = URL.createObjectURL(selectedImage);
-    } else {      
-      alert("Você esqueceu de adicionar uma imagem do produto!");
-      return
-    }
+    const alreadyExists = currentProductList.find(product => product.name === productName);
 
     if (!user) {
       alert("Você precisa estar registrado para adicionar um produto!");
       navigate(REDIRECTION_PAGE);
-    }
-    else if (validFields && !alreadyExists && user._id) {
-      let product = { 
-        'name': productName, 
-        'description': productDescription, 
-        'price': `R$: ${productPrice.toFixed(2)}`, 
-        'images': image,
+    } else if (!productPrice) {
+      alert("Você precisa adicionar o preço do produto!");
+    } else if (!selectedImage) {
+      alert("Você esqueceu de adicionar uma imagem do produto!");
+    } else if (validFields && !alreadyExists && user._id) {
+      let product = {
+        'name': productName,
+        'description': productDescription,
+        'price': `R$: ${productPrice.toFixed(2)}`,
+        'images': URL.createObjectURL(selectedImage),
         'user_id': user._id
       };
       setCurrentProductList(previousState => [...previousState, product]);
-    }
-    else if (alreadyExists)
+    } else if (alreadyExists) {
       alert("Esse produto já está cadastrado");
-    else
-      alert("Opa! alguma informação está estranha :/");
+    } else {
+      alert("Opa! alguma informação está estranha :/\nCampos 'nome' e 'descrição' não podem ser numéricos ou vazios");
+    }
   }
 
   const handleRemoveProductsOnList = (product) => {
@@ -95,20 +94,36 @@ const Products = () => {
     }
   }
 
-  const handleAddProducts = async () => { //TODO - implementar isso aqui
+  const handleProductsValidation = () => { //TODO - implementar isso aqui
     let removedProducts = initialProductList.filter(p => !currentProductList.includes(p));
     let addedProducts = currentProductList.filter(p => !initialProductList.includes(p));
 
     if (addedProducts.length > 0) {
-      let result = await addProduct(addedProducts);
-      if (result.status === 201 && confirm("Lista de produtos cadastrada com sucesso!")) {
-        navigate(REDIRECTION_PAGE);
+      if (isEditionRequest) {
+        handleSubmitUpdate();
       } else {
-        alert("Falha ao cadastrar a lista de produtos.");
+        handleSubmitCreate();
       }
-    } 
-    else {
+    } else {
       alert("Nenhum produto foi adicionado.");
+    }
+  }
+
+  const handleSubmitCreate = async () => {
+    let result = await addProduct(addedProducts);
+    if (result.status === 201 && confirm("Lista de produtos cadastrada com sucesso!")) {
+      navigate(REDIRECTION_PAGE);
+    } else {
+      alert("Falha ao cadastrar a lista de produtos.");
+    }
+  }
+
+  const handleSubmitUpdate = async () => { //AJEITAR ESSA REQUISIÇÃO NO BACKEND
+    let result = { status: 201 };
+    if (result.status === 201 && confirm("Lista de produtos cadastrada com sucesso!")) {
+      navigate(REDIRECTION_PAGE);
+    } else {
+      alert("Falha ao cadastrar a lista de produtos.");
     }
   }
 
@@ -150,13 +165,12 @@ const Products = () => {
         </Header>
 
         <FormComponents>
-          <InputWrapper value={productName} placeholder='Nome do produto*' onChange={(e) => setProductName(e.target.value)} />
-          <InputWrapper value={productDescription} placeholder='Descrição do produto*' onChange={(e) => setProductDescription(e.target.value)} />
-          <InputWrapper value={productPrice} placeholder='Preço do produto*' type="number" step="0.05" onChange={(e) => setProductPrice(+e.target.value)} />
+          <InputWrapper placeholder='Nome do produto*' onChange={(e) => setProductName(e.target.value)} />
+          <InputWrapper placeholder='Descrição do produto*' onChange={(e) => setProductDescription(e.target.value)} />
+          <InputWrapper placeholder='Preço do produto*' type="number" step="0.05" onChange={(e) => setProductPrice(+e.target.value)} />
 
           <ButtonsInline>
-            <input variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem do produto*" onChange={(e) => setSelectedImage(e.target.files[0])}/>
-            {/* <InputWrapper variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem do produto*" onChange={(e) => setSelectedImage(e.target.files[0])}/>  */}
+            <input variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem do produto*" onChange={(e) => setSelectedImage(e.target.files[0])} />
             <ButtonWrapper variant="slim" onClick={handleAddProductsOnList}>Adicionar produto</ButtonWrapper>
           </ButtonsInline>
 
@@ -172,7 +186,7 @@ const Products = () => {
         </FormComponents>
 
         <Footer>
-          <ButtonWrapper onClick={handleAddProducts} variant="form">Cadastrar produtos</ButtonWrapper>
+          <ButtonWrapper onClick={handleProductsValidation} variant="form">Cadastrar produtos</ButtonWrapper>
         </Footer>
       </BoxContainer>
     </Container >

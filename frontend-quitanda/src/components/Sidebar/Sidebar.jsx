@@ -52,10 +52,10 @@ export const Sidebar = () => {
           );
         })}
 
-        {/* <SidebarItem>
+        <SidebarItem>
           <MdExitToApp />
           Sair
-        </SidebarItem> */}
+        </SidebarItem>
       </MenuContainer>
     </Container>
   );

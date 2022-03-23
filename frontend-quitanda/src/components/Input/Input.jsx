@@ -5,7 +5,8 @@ import styled from 'styled-components';
 export const InputVariants = {
   default: 'default',
   password: 'password',
-  file: 'file'
+  file: 'file',
+  text: 'text',
 };
 
 export const Container = styled.div`
@@ -44,6 +45,15 @@ const InputFileLabel = styled.label`
   padding: 6px 20px;
 `
 
+const InputText = styled.textarea`
+  width: 95%;
+  resize: none;
+	font-size: 1rem;
+	font-weight: 600;
+	padding: 10px 12px;
+  border-radius: 5px;
+`;
+
 const InputWrapper = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -65,7 +75,7 @@ const InputWrapper = (props) => {
       return (
         <Container>
           <InputTitle>{props.placeholder}</InputTitle>
-          <Input {...props} type={showPassword ? 'input' : 'password'} /> 
+          <Input {...props} type={showPassword ? 'input' : 'password'} />
           {faEye}
         </Container>
       );
@@ -73,14 +83,21 @@ const InputWrapper = (props) => {
       return (
         <Fragment>
           <InputFileLabel htmlFor='input-file'> {props.placeholder} </InputFileLabel>
-          <InputFile id='input-file' {...props} /> 
+          <InputFile id='input-file' {...props} />
         </Fragment>
+      );
+    case InputVariants.text:
+      return (
+        <Container>
+          <InputTitle>{props.placeholder}</InputTitle>
+          <InputText {...props} />
+        </Container>
       );
     default:
       return (
         <Container>
           <InputTitle>{props.placeholder}</InputTitle>
-          <Input {...props}/>
+          <Input {...props} />
         </Container>
       );
   };
