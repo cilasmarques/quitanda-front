@@ -20,9 +20,8 @@ export const DashboardRoutes = () => {
         <Route index element={<Dashboard />} />
 
         <Route path="/perfil">
-          <Route index element={<Profile />} />
+          {/* <Route index element={<Profile />} /> */}
           <Route path=":name" element={<Profile />} />
-
           <Route path=":name/edit" element={<Profile />} />
         </Route>
 

@@ -11,6 +11,14 @@ export async function addUser(user) {
   };
 }
 
+export async function getUsersList() {
+  try {
+    return await axios.get(`${url}/users`);
+  } catch (error) {
+    handleError(error);
+  };
+};
+
 export async function getAllUsers(sortConfig, page) {
   try {
     return await axios.get(`${url}/users/${sortConfig}/${page}`);

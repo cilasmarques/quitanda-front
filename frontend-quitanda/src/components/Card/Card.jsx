@@ -42,7 +42,8 @@ const StyledCard = styled.div`
   justify-content: center;
   margin-right: 8px;
 
-  max-width: 250px;
+  min-width: 250px;
+  max-width: 280px;
   max-height: 250px;
   padding: 10px 30px;
 `;

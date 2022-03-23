@@ -8,16 +8,16 @@ const SidebarItems = [
     route: "/",
     icon: MdDashboard,
   },
-  {
-    name: "Perfil",
-    route: "/perfil",
-    icon: FaUserTie,
-  },
-  {
-    name: "Usuários",
-    route: "/usuarios",
-    icon: FaUsers,
-  },
+  // {
+  //   name: "Perfil",
+  //   route: "/perfil",
+  //   icon: FaUserTie,
+  // },
+  // {
+  //   name: "Usuários",
+  //   route: "/usuarios",
+  //   icon: FaUsers,
+  // },
 ];
 
 export default SidebarItems;

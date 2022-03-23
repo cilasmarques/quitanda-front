@@ -101,8 +101,10 @@ const Products = () => {
 
     if (addedProducts.length > 0) {
       let result = await addProduct(addedProducts);
-      if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
+      if (result.status === 201 && confirm("Lista de produtos cadastrada com sucesso!")) {
         navigate(REDIRECTION_PAGE);
+      } else {
+        alert("Falha ao cadastrar a lista de produtos.");
       }
     } 
     else {
@@ -153,7 +155,8 @@ const Products = () => {
           <InputWrapper value={productPrice} placeholder='Preço do produto*' type="number" step="0.05" onChange={(e) => setProductPrice(+e.target.value)} />
 
           <ButtonsInline>
-            <InputWrapper variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem do produto*" onChange={(e) => setSelectedImage(e.target.files[0])}/> 
+            <input variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem do produto*" onChange={(e) => setSelectedImage(e.target.files[0])}/>
+            {/* <InputWrapper variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem do produto*" onChange={(e) => setSelectedImage(e.target.files[0])}/>  */}
             <ButtonWrapper variant="slim" onClick={handleAddProductsOnList}>Adicionar produto</ButtonWrapper>
           </ButtonsInline>
 

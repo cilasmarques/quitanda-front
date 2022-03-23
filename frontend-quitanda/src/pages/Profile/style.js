@@ -24,20 +24,20 @@ export const ProductContainer = styled.div`
   column-gap: 1.8rem;
   padding-bottom: 0.5rem;
   overflow: overlay;
-  align-items: center;
+  /* align-items: center; */
   width: 100%;
   ::-webkit-scrollbar {
     display: none;
   }
 
   @media only screen and (max-width: 2500px) {
-    height: 58ch;
+    max-height: 58ch;
   }
   @media only screen and (max-width: 1600px) {
-    height: 28ch;
+    max-height: 28ch;
   }
   @media only screen and (max-width: 1200px) {
-    height: 24ch;
+    max-height: 24ch;
   }
 `;
 

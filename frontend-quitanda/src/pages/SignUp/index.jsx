@@ -39,6 +39,7 @@ const SignUpPage = () => {
   const [socialNetwork2, setSocialNetwork2] = useState("");
   const [socialNetwork3, setSocialNetwork3] = useState("");
   const [switchScreen, setSwitchScreen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleValidateField = (field) => {
     return !fieldsValidator.isUndefined(field) && !fieldsValidator.isEmpty(field) && !fieldsValidator.isNumeric(field);
@@ -75,7 +76,8 @@ const SignUpPage = () => {
         "business_description": businessDescription,
         "social_network_1": socialNetwork1,
         "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : null,
-        "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : null
+        "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : null,
+        "profile_picture": URL.createObjectURL(selectedImage)
       })
 
       if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
@@ -130,6 +132,11 @@ const SignUpPage = () => {
           <InputWrapper required placeholder='Link rede social 01 *' value={socialNetwork1} onChange={(e) => setSocialNetwork1(e.target.value)} />
           <InputWrapper placeholder='Link rede social 02' value={socialNetwork2} onChange={(e) => setSocialNetwork2(e.target.value)} />
           <InputWrapper placeholder='Link rede social 03' value={socialNetwork3} onChange={(e) => setSocialNetwork3(e.target.value)} />
+          <div>
+            <span>Foto de perfil: </span>
+            <input variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem de perfil*" onChange={(e) => setSelectedImage(e.target.files[0])}/>
+          </div>
+          {/* <InputWrapper variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem de perfil*" onChange={(e) => setSelectedImage(e.target.files[0])}/>  */}
           {/* <InputWrapper placeholder='Comprovante de MEI' /> */}
           {/* <InputWrapper placeholder='CPF/CNPJ' /> */}
           {/* <InputWrapper placeholder='Data de nascimento (DD/MM/AAAA)' /> */}

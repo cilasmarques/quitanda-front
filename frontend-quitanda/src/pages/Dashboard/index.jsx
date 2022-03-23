@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 import { Root, Content, CarouselButton } from "./styles";
 
 //COMPONENTS
-import { getAllUsers } from "../../services/UserService";
+import { getUsersList } from "../../services/UserService";
 import { getAllProducts } from "../../services/ProductService";
 
 export const Dashboard = () => {
@@ -42,10 +42,10 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      const usersResult = await getAllUsers("Ascending", 1);
+      const usersResult = await getUsersList();
       const productsResult = await getAllProducts("Ascending", 1);
 
-      setUsersList(usersResult.data.users);
+      setUsersList(usersResult.data.users_list);
       setProductsList(productsResult.data.products);
     };
 
@@ -60,11 +60,11 @@ export const Dashboard = () => {
       usersList.map((user, index) => {
         cardList.push(
           <Card title={user.name} key={index}>
-            <CardMedia image={docinho} size="default" />
+            <CardMedia src={user.profile_picture} />
             {/* TODO - pegar a imagem do backend*/}
             <CardBody color="black">
               <p> {user.ocupation_area} </p>
-              <Link to={`/perfil/${user.name}`}>
+              <Link to={`/perfil/${user.username}`}>
                 <p> Ver Detalhes </p>
               </Link>
               {/* TODO - colocar Link de redirecionamento  */}
@@ -89,8 +89,8 @@ export const Dashboard = () => {
             <CardMedia src={product.images} />
             <CardBody color="black">
               <p> Preço: {product.price} </p>
-              <p> Descrição: {product.description} </p>
-              <Link to={`/perfil`}>
+              <p> {product.description} </p>
+              <Link to={`/perfil/`} >
                 <p> Ver Detalhes </p>
               </Link>
               {/* TODO - colocar Link de redirecionamento  */}
@@ -172,7 +172,7 @@ export const Dashboard = () => {
         </Content>
       </Container>
 
-      <Container>
+      {/* <Container>
         <ContainerHeader title="Eventos">
           <SearchInput>
             <div className="search">
@@ -213,7 +213,7 @@ export const Dashboard = () => {
             })}
           </Carousel>
         </Content>
-      </Container>
+      </Container> */}
     </Root>
   );
 };

@@ -54,3 +54,13 @@ export async function deleteProductById(productId) {
     handleError(error);
   };
 };
+
+export async function getProductsByUser(userName) {
+  try {
+    return await axios.get(`${url}/products/${userName}`, {
+      // headers: { 'Authorization': `Bearer ${localStorage.getItem(LocalStorageKeys.TOKEN)}` },
+    });
+  } catch (error) {
+    handleError(error);
+  };
+};

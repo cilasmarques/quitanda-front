@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
 import { Header } from "../../components/Header/Header";
@@ -22,15 +22,28 @@ import { css } from "@emotion/react";
 import { SyncLoader } from "react-spinners/";
 import { art } from "../Dashboard/item";
 
+import { getProductsByUser } from "../../services/ProductService";
+
 const override = css`
   display: block;
   margin: 0 auto;
 `;
 
 export const Profile = () => {
-  const { id } = useParams();
-
+  const { name } = useParams();
   const [loading, setLoading] = useState(false);
+  const [userProducts, setUserProducts] = useState([]);
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const result = await getProductsByUser(name);
+      console.log(result.data);
+      setUserData(result.data.user_products);
+      setUserProducts(result.data.user_products.products);
+    }
+    loadData();
+  }, []);
 
   return (
     <Root>
@@ -39,35 +52,35 @@ export const Profile = () => {
         <ContainerHeader title="Sobre" />
 
         <Content>
-          <Card title="Nome do comercio">
-            <CardMedia image={docinho} size="large" />
+          <Card title={userData.business_name}>
+            <CardMedia src={userData.profile_picture}/>
           </Card>
 
           <Description>
-            <h3> Descricao sobre o negocio</h3>
-            <AddressInfo>
-              <span>CEP: 58410-258 </span>
-              <span>Rua: Aluisio Cunha Lima,450</span>
-              <span>Bairro: Catolé</span>
-            </AddressInfo>
+            <h3>{userData.business_description}</h3>
+            {/* <AddressInfo> */}
+              {/* <span>CEP: 58410-258 </span> */}
+              {/* <span>Rua: Aluisio Cunha Lima,450</span> */}
+              {/* <span>Bairro: Catolé</span> */}
+            {/* </AddressInfo> */}
             <SocialNetworkInfo>
-              <span>Numero de contato: (83) 9.9999-9999 </span>
-              <span> Link rede social 01: instagram@</span>
-              <span> Link rede social 02: instagram@</span>
-              <span> Link rede social 03: instagram@</span>
+              {/* <span>Numero de contato: (83) 9.9999-9999 </span> */}
+              <span> Link rede social 01: {userData.social_network_1}</span>
+              {/* <span> Link rede social 02: instagram@</span> */}
+              {/* <span> Link rede social 03: instagram@</span> */}
             </SocialNetworkInfo>
           </Description>
 
           <Description>
             <h3> Dados de Validação</h3>
             <AdminInfo>
-              <span>Email</span>
-              <span>Senha</span>
-              <span>Responsavel</span>
-              <span>Ramo de atividade</span>
-              <span>Comprovante MEI</span>
-              <span>CPF/CNPJ</span>
-              <span>Data de nascimento</span>
+              <span>Email: {userData.email}</span>
+              {/* <span>Senha</span> */}
+              <span>Responsavel : {userData.name}</span>
+              <span>Ramo de atividade: {userData.ocupation_area}</span>
+              {/* <span>Comprovante MEI</span> */}
+              {/* <span>CPF/CNPJ</span> */}
+              {/* <span>Data de nascimento</span> */}
             </AdminInfo>
           </Description>
         </Content>
@@ -84,6 +97,7 @@ export const Profile = () => {
             </div>
           </SearchInput>
         </ContainerHeader>
+        
         <ProductContainer>
           {loading ? (
             <SyncLoader
@@ -94,15 +108,14 @@ export const Profile = () => {
             />
           ) : (
             <>
-              {art.map((a, index) => {
+              {userProducts.map((product, index) => {
+                // console.log(product);
                 return (
-                  <Card key={index} title={a.title}>
-                    <CardMedia image={a.image} size={a.size} />
-                    <CardBody color={a.color}>
-                      <h6>{a.superTitle}</h6>
-                      <Link to={`/perfil`}>
-                        <h6>{a.link}</h6>
-                      </Link>
+                  <Card key={index} title={product.name}>
+                    <CardMedia src={product.images}  />
+                    <CardBody>
+                      <p>{product.price}</p>
+                      <p>{product.description}</p>
                     </CardBody>
                   </Card>
                 );
