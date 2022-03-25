@@ -39,6 +39,7 @@ export const Profile = () => {
   const [profileProducts, setProfileProducts] = useState([]);
   const [profileData, setProfileData] = useState([]);
   const [loggedUserData, setLoggedUserData] = useState({}); //So um teste: localStorage.setItem("@user", JSON.stringify({'_id': '205f154a88fecf6e78f1bdae9c08848d3f72dd72', username:"tecendoredes", name:"Fátima Batista"}))
+  const [userIsAdmin, setUserIsAdmin] = useState(false); //mudar isso dps
 
   useEffect(() => {
     const loadData = async () => {
@@ -47,19 +48,31 @@ export const Profile = () => {
       setProfileProducts(result.data.user_products.products);
 
       const userData = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-      if (userData)
+      if (userData) {
         setLoggedUserData(userData);
+      }
     }
     loadData();
   }, []);
 
-
   const handleEditProfile = () => {
-    navigate(`edit`, {name: name});
+    navigate(`edit`, { name: name });
   }
 
   const handleReportUser = () => {
     alert("Usuário reportado");
+  }
+
+  const handleAcceptUser = () => {
+    if (confirm("Você realmente deseja aceitar esse usuário?")) {
+      //Atualizar o usuário aqui
+    }
+  }
+
+  const handleRejectUser = () => {
+    if (confirm("Você realmente deseja rejeitar esse usuário?")) {
+      //Atualizar o usuário aqui
+    }
   }
 
   return (
@@ -91,6 +104,8 @@ export const Profile = () => {
           </Description>
 
           <Controllers>
+            {userIsAdmin && <ButtonWrapper variant="slim" onClick={handleAcceptUser}> Accept </ButtonWrapper>}
+            {userIsAdmin && <ButtonWrapper variant="slim" onClick={handleRejectUser}> Reject </ButtonWrapper>}
             {(loggedUserData.username === name) ?
               <ButtonWrapper variant="slim" onClick={handleEditProfile}> Edit </ButtonWrapper> :
               <ButtonWrapper variant="slim" onClick={handleReportUser}> Report </ButtonWrapper>

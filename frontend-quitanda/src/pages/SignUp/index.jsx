@@ -118,7 +118,7 @@ const SignUpPage = () => {
       "social_network_1": socialNetwork1,
       "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : null,
       "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : null,
-      "profile_picture": URL.createObjectURL(selectedImage)
+      "profile_picture": selectedImage ? URL.createObjectURL(selectedImage) : null
     });
 
     if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {

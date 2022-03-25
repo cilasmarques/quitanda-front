@@ -1,59 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 import { ContainerHeader } from "../../components/ContainerHeader/ContainerHeader";
 import { Container } from "../../components/Container/Container";
 import { Header } from "../../components/Header/Header";
 import { Root } from "../Dashboard/styles";
 import { Coluns, Content, Description } from "./styles";
 
+import { getAllUsers, deleteUserByUsername } from '../../services/UserService';
+
 export const UserList = () => {
-  const handleListUsers = () => {
-    const userList = [{
-      'access_authorization': false,
-      'address': null,
-      'birthdate': null,
-      'business_description': "Jarros para plantas personalizados",
-      'business_name': "Seu Jarrinho",
-      'contact_phone': null,
-      'email': "mariajarrinho@gmail.com",
-      'name': "Maria Eduarda",
-      'ocupation_area': "Artesanato",
-      'profile_picture': "blob:http://localhost:3000/93fa4c14-cbb7-402a-957b-5fb17bb538ce",
-      'social_network_1': "@seu_jarrinho",
-      'social_network_2': null,
-      'social_network_3': null,
-      'username': "mariajr",
-      '_created_at': 1647881945.258395,
-      '_id': "fb8642a42e35e32ef99d867ff4e3f8529ea5976c"
-    },
-    {
-      'access_authorization': false,
-      'address': null,
-      'birthdate': null,
-      'business_description': "Loja online de itens personalizados em resina",
-      'business_name': "Resinar",
-      'contact_phone': null,
-      'email': "resinar@gmail.com",
-      'name': "Priscilla Dantas",
-      'ocupation_area': "Resina",
-      'profile_picture': "blob:http://localhost:3000/ff63f9b5-d939-44fb-b1f1-1edc4c416e95",
-      'social_network_1': "@rresinar",
-      'social_network_2': null,
-      'social_network_3': null,
-      'username': "resinar",
-      '_created_at': 1647882052.0636673,
-      '_id': "5f89065ec8533460120411d249f2d67bc8cbb1b2"
-    }]
+  const navigate = useNavigate();
+  const [userList, setUserList] = useState([]);
+  const [updateUserList, setUpdateUserList] = useState(true);
 
-    let rowList = [];
-    if(userList){
-      userList.map((user, index) => {
-        rowList.push(
-
-        )
-      });
+  useEffect(() => {
+    if (updateUserList) {
+      loadUserList();
     }
-    return rowList;
-  };
+  }, [updateUserList]);
+
+  const loadUserList = async () => {
+    const result = await getAllUsers();
+    if (result && result.data.users_list) {
+      setUserList(result.data.users_list);
+      setUpdateUserList(false);
+    }
+  }
+
+  const handleDeleteUser = async (username) => {
+    if (confirm("Você realmente deseja deletar esse usuário?")) {
+      const result = await deleteUserByUsername(username);
+      if (result && result.status === 200) {
+        alert("Usuário deletado com sucesso!");
+        setUpdateUserList(true);
+      }
+    }
+  }
+
+  const handleCheckUser = async (username) => {
+    navigate(`/perfil/${username}/check`, {name: username});
+  }  
 
   return (
     <Root>
@@ -61,16 +48,46 @@ export const UserList = () => {
       <Container>
         <ContainerHeader title="All users" />
         <Coluns>
-          <h3>UserId</h3>
-          <h3>Status</h3>
-          <h3>Nome</h3>
-          <h3>Username</h3>
-          <h3>OutraCoisa</h3>
-          <h3>Actions</h3>
+          <div>
+            <h3>UserId</h3>
+            {userList.map((user, index) => (<p key={index}> {user.email}</p>))}
+          </div>
+
+          <div>
+            <h3>Status</h3>
+            {userList.map((user, index) => (<p key={index}> {(user.access_authorization === true) ? "Approved" : "To review"} </p>))}
+          </div>
+
+          <div>
+            <h3>Nome do negócio</h3>
+            {userList.map((user, index) => (<p key={index}> {user.business_name}</p>))}
+          </div>
+
+          <div>
+            <h3>Username</h3>
+            {userList.map((user, index) => (<p key={index}> {user.username}</p>))}
+          </div>
+
+          <div>
+            <h3>Actions</h3>
+            {userList.map((user, index) => (
+              <div key={index}>
+                <button
+                  onClick={() => handleCheckUser(user.username)}
+                  style={{ marginRight: "2px", backgroundColor: "darkblue", color: "white" }}
+                >
+                  CHECK
+                </button>
+                <button
+                  onClick={() => handleDeleteUser(user.username)}
+                  style={{ marginLeft: "2px", backgroundColor: "darkred", color: "white" }}
+                >
+                  DELETE
+                </button>
+              </div>
+            ))}
+          </div>
         </Coluns>
-        {/* <Users>
-          {handleListUsers().map((rowList) => rowList)}
-        </Users> */}
       </Container>
     </Root>
   );

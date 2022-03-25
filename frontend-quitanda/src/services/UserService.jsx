@@ -19,9 +19,9 @@ export async function getUsersList() {
   };
 };
 
-export async function getAllUsers(sortConfig, page) {
+export async function getAllUsers() {
   try {
-    return await axios.get(`${url}/users/${sortConfig}/${page}`);
+    return await axios.get(`${url}/users`);
   } catch (error) {
     handleError(error);
   };
@@ -64,7 +64,7 @@ export async function updateUserByUsername(userName, userData) {
 
 export async function deleteUserByUsername(userName) {
   try {
-    return await axios.delete(`${url}/user/${userName}`, {
+    return await axios.delete(`${url}/users/${userName}`, {
       // headers: { 'Authorization': `Bearer ${localStorage.getItem(LocalStorageKeys.TOKEN)}` },
     });
   } catch (error) {
