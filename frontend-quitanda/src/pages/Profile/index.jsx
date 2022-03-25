@@ -47,20 +47,18 @@ export const Profile = () => {
       setProfileProducts(result.data.user_products.products);
 
       const userData = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-      if (userData)
-        setLoggedUserData(userData);
-    }
+      if (userData) setLoggedUserData(userData);
+    };
     loadData();
   }, []);
 
-
   const handleEditProfile = () => {
-    navigate(`edit`, {name: name});
-  }
+    navigate(`edit`, { name: name });
+  };
 
   const handleReportUser = () => {
     alert("Usuário reportado");
-  }
+  };
 
   return (
     <Root>
@@ -76,8 +74,18 @@ export const Profile = () => {
             <h3>{profileData.business_description}</h3>
             <SocialNetworkInfo>
               <span> Link rede social 01: {profileData.social_network_1}</span>
-              {profileData.social_network_2 && <span> Link rede social 02: {profileData.social_network_2}</span>}
-              {profileData.social_network_3 && <span> Link rede social 03: {profileData.social_network_3}</span>}
+              {profileData.social_network_2 && (
+                <span>
+                  {" "}
+                  Link rede social 02: {profileData.social_network_2}
+                </span>
+              )}
+              {profileData.social_network_3 && (
+                <span>
+                  {" "}
+                  Link rede social 03: {profileData.social_network_3}
+                </span>
+              )}
             </SocialNetworkInfo>
           </Description>
 
@@ -91,10 +99,17 @@ export const Profile = () => {
           </Description>
 
           <Controllers>
-            {(loggedUserData.username === name) ?
-              <ButtonWrapper variant="slim" onClick={handleEditProfile}> Edit </ButtonWrapper> :
-              <ButtonWrapper variant="slim" onClick={handleReportUser}> Report </ButtonWrapper>
-            }
+            {loggedUserData.username === name ? (
+              <ButtonWrapper variant="slim" onClick={handleEditProfile}>
+                {" "}
+                Edit{" "}
+              </ButtonWrapper>
+            ) : (
+              <ButtonWrapper variant="slim" onClick={handleReportUser}>
+                {" "}
+                Report{" "}
+              </ButtonWrapper>
+            )}
           </Controllers>
         </Content>
       </Container>

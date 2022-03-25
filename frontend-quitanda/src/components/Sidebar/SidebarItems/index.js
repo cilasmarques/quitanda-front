@@ -10,16 +10,19 @@ const SidebarItems = [
     name: "Dashboard",
     route: "/",
     icon: MdDashboard,
+    authFlag: [null, "user", "admin"],
   },
   {
     name: "Perfil",
-    route: (user ? `/perfil/${user.username}` : 'perfil'),
+    route: user ? `/perfil/${user.username}` : "perfil",
     icon: FaUserTie,
+    authFlag: ["user"],
   },
   {
     name: "Usuários",
     route: "/usuarios",
     icon: FaUsers,
+    authFlag: ["admin"],
   },
 ];
 

@@ -31,9 +31,6 @@ const Carousel = forwardRef(({ children, move, carouselRef }) => {
   );
 
   useEffect(() => {
-    const child = React.Children.toArray(children);
-
-    console.log("width", child);
     updateIndex(move);
   }, [move]);
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { MdExitToApp } from "react-icons/md";
+import { LocalStorageKeys } from "../../enums/local-storage-keys-enum";
 
 // STYLES
 import {
@@ -33,6 +34,8 @@ export const Sidebar = () => {
     localStorage.setItem("lastActiveIndex", newIndex);
     setActiveIndex(newIndex);
   }
+  // const user = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
+  const user = null;
 
   return (
     <Container>
@@ -42,20 +45,26 @@ export const Sidebar = () => {
 
       <MenuContainer>
         {SidebarItems.map((item, index) => {
-          return (
+          return item.authFlag.includes(user) ? (
             <MenuItemLink key={item.name} to={item.route}>
               <SidebarItem active={index === activeIndex}>
                 {<item.icon />}
                 {item.name}
               </SidebarItem>
             </MenuItemLink>
+          ) : (
+            ""
           );
         })}
 
-        <SidebarItem>
-          <MdExitToApp />
-          Sair
-        </SidebarItem>
+        {user ? (
+          <SidebarItem>
+            <MdExitToApp />
+            Sair
+          </SidebarItem>
+        ) : (
+          ""
+        )}
       </MenuContainer>
     </Container>
   );
