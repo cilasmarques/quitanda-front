@@ -28,7 +28,11 @@ export const AuthRoutes = () => {
 
       <Route path="/usuarios" element={<Layout> <UserList /> </Layout>} />
 
-      <Route path="/login" element={<SignInPage />} />
+      <Route path="/login" >
+        <Route index element={<SignInPage />} /> 
+        <Route path="admin" element={<SignInPage />} />
+      </Route>
+
       <Route path="/recuperarSenha" element={<RecoveryPassword />} />
       <Route path="/cadastro" element={<SignUpPage />} />
       <Route path="/produtos" element={<Products />} />
