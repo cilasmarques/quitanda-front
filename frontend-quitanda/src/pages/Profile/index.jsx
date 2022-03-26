@@ -90,16 +90,10 @@ export const Profile = () => {
             <SocialNetworkInfo>
               <span> Link rede social 01: {profileData.social_network_1}</span>
               {profileData.social_network_2 && (
-                <span>
-                  {" "}
-                  Link rede social 02: {profileData.social_network_2}
-                </span>
+                <span>Link rede social 02: {profileData.social_network_2}</span>
               )}
               {profileData.social_network_3 && (
-                <span>
-                  {" "}
-                  Link rede social 03: {profileData.social_network_3}
-                </span>
+                <span>Link rede social 03: {profileData.social_network_3}</span>
               )}
             </SocialNetworkInfo>
           </Description>
@@ -116,25 +110,21 @@ export const Profile = () => {
           <Controllers>
             {userIsAdmin && (
               <ButtonWrapper variant="slim" onClick={handleAcceptUser}>
-                {" "}
-                Accept{" "}
+                Accept
               </ButtonWrapper>
             )}
             {userIsAdmin && (
               <ButtonWrapper variant="slim" onClick={handleRejectUser}>
-                {" "}
-                Reject{" "}
+                Reject
               </ButtonWrapper>
             )}
             {loggedUserData.username === name ? (
               <ButtonWrapper variant="slim" onClick={handleEditProfile}>
-                {" "}
-                Edit{" "}
+                Edit
               </ButtonWrapper>
             ) : (
               <ButtonWrapper variant="slim" onClick={handleReportUser}>
-                {" "}
-                Report{" "}
+                Report
               </ButtonWrapper>
             )}
           </Controllers>
