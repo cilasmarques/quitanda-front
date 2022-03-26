@@ -2,18 +2,22 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { LocalStorageKeys } from "../enums/local-storage-keys-enum";
 
-export const AuthContext = createContext({});
+const initalState = {
+  user: {},
+  setUser: () => {},
+  signOut: () => {},
+}
+
+export const AuthContext = createContext(initalState);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (!user) {
-      const localUser = localStorage.getItem(LocalStorageKeys.USER);
-      if (localUser) {
-        setUser(JSON.parse(localUser));
-      }
-    }
+    let u = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
+    if (!u) {
+      localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(u));
+    } 
   }, []);
 
   const signOut = () => {
@@ -23,6 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const authProviderData = {
     user,
+    setUser,
     signOut,
   };
 

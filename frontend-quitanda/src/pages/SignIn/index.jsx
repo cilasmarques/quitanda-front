@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-
-import { LocalStorageKeys } from '../../enums/local-storage-keys-enum'
+import React, { useContext, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 //COMPONENTS
 import InputWrapper from "../../components/Input/Input";
@@ -9,6 +7,9 @@ import ButtonWrapper from "../../components/Button/Button";
 
 //SERVICES
 import { loginAdmin, loginUser } from '../../services/AuthService'
+
+//CONTEXT
+import { useAuth } from '../../contexts/AuthContext'
 
 // STYLES
 import {
@@ -25,9 +26,10 @@ import {
 const SIGNUP_PATH = "/cadastro"
 const FORGOT_PASSWORD_PATH = "/recuperarSenha"
 
-
 const SignInPage = () => {
+  const { setUser } = useAuth();
   const params = useLocation();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -38,19 +40,22 @@ const SignInPage = () => {
       alert("Senha inválida");
     } else {
       let result = null;
+      let isAdmin = null;
       if (params.pathname.includes("admin")) {
         result = await loginAdmin(username, password);
+        isAdmin = true;
       } else {
         result = await loginUser(username, password);
+        isAdmin = false;
       }
- 
-      console.log(result)
 
       if (result.status === 200) {
-        localStorage.setItem(LocalStorageKeys.USER_DATA, {
+        setUser({
           'user': result.data.user,
-          'token': result.data.token
-        });        
+          'token': result.data.token,
+          'isAdmin': isAdmin
+        });
+        navigate("/");
       } else {
         alert("Falha no login");
       }

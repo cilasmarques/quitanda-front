@@ -3,17 +3,27 @@ import { handleError } from '../utils/handleErrors';
 
 const url = 'http://localhost:8000';
 
-export async function loginAdmin(username, password) {
+export async function loginAdmin(uname, pass) {
   try {
-    return await axios.post(`${url}/login?admin=true`, {'username': username, 'password': password});
+    return await axios.post(`${url}/login?adm=true`, {}, {
+      auth: {
+        username: uname,
+        password: pass
+      }
+    });
   } catch (error) {
     handleError(error);
   };
 }
 
-export async function loginUser(username, password) {
+export async function loginUser(uname, pass) {
   try {
-    return await axios.post(`${url}/login`, {'username': username, 'password': password});
+    return await axios.post(`${url}/login`, {}, {
+      auth: {
+        username: uname,
+        password: pass
+      }
+    });
   } catch (error) {
     handleError(error);
   };

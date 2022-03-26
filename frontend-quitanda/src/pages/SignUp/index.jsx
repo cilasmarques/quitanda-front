@@ -151,7 +151,7 @@ const SignUpPage = ({ crudType }) => {
 
     if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
       const user = result.data.new_user;
-      localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(user));
+      // localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(user));
       navigate("/produtos");
     }
   };
