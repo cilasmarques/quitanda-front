@@ -102,14 +102,14 @@ const Products = () => {
       if (isEditionRequest) {
         handleSubmitUpdate();
       } else {
-        handleSubmitCreate();
+        handleSubmitCreate(addedProducts);
       }
     } else {
       alert("Nenhum produto foi adicionado.");
     }
   }
 
-  const handleSubmitCreate = async () => {
+  const handleSubmitCreate = async (addedProducts) => {
     let result = await addProduct(addedProducts);
     if (result.status === 201 && confirm("Lista de produtos cadastrada com sucesso!")) {
       navigate(REDIRECTION_PAGE);

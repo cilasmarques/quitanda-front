@@ -51,26 +51,3 @@ letter-spacing: 0.4px;
 margin-top: 1rem;
 text-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
 `;
-
-export const FormComponents = styled.div`
-  width: 100%;
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-`;
-
-export const Footer = styled.div`
-  width: 100%;
-  display: inline-flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-`;
-
-export const FormLink = styled.a`
-  color: #863e03;
-`;
