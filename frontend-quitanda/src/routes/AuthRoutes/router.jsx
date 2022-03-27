@@ -14,8 +14,19 @@ import RecoveryPassword from "../../pages/RecoveryPassword";
 import { Layout } from "../../components/Layout/Layout";
 
 export const AuthRoutes = () => {
+  console.log("autorização rotas");
   return (
     <Switch>
+      <Route path="/login">
+        <Route index element={<SignInPage />} />
+        <Route path="admin" element={<SignInPage />} />
+      </Route>
+
+      <Route path="/recuperarSenha" element={<RecoveryPassword />} />
+      <Route path="/cadastro" element={<SignUpPage />} />
+      <Route path="/produtos" element={<Products />} />
+      <Route path="*" element={<NotFound />} />
+
       <Route
         path="/"
         element={
@@ -34,51 +45,7 @@ export const AuthRoutes = () => {
             </Layout>
           }
         />
-        <Route
-          path=":name/check"
-          element={
-            <Layout>
-              <Profile />
-            </Layout>
-          }
-        />
-        {/** so pode ser acessada pelo admin */}
-        <Route
-          path=":name/edit"
-          element={
-            <Layout>
-              <SignUpPage />
-            </Layout>
-          }
-        />
-        <Route
-          path=":name/edit/produtos"
-          element={
-            <Layout>
-              <Products />
-            </Layout>
-          }
-        />
       </Route>
-
-      <Route
-        path="/usuarios"
-        element={
-          <Layout>
-            <UserList />
-          </Layout>
-        }
-      />
-
-      <Route path="/login">
-        <Route index element={<SignInPage />} />
-        <Route path="admin" element={<SignInPage />} />
-      </Route>
-
-      <Route path="/recuperarSenha" element={<RecoveryPassword />} />
-      <Route path="/cadastro" element={<SignUpPage />} />
-      <Route path="/produtos" element={<Products />} />
-      <Route path="*" element={<NotFound />} />
     </Switch>
   );
 };
