@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   margin: auto;
@@ -41,15 +42,15 @@ export const Title = styled.h2`
 `;
 
 export const Subtitle = styled.p`
-color: #252733;
-font-weight: 350;
-font-size: 1rem;
-font-family: "Mulish", "Roboto";
-font-style: normal;
-line-height: 1.8rem;
-letter-spacing: 0.4px;
-margin-top: 1rem;
-text-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+  color: #252733;
+  font-weight: 350;
+  font-size: 1rem;
+  font-family: "Mulish", "Roboto";
+  font-style: normal;
+  line-height: 1.8rem;
+  letter-spacing: 0.4px;
+  margin-top: 1rem;
+  text-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
 `;
 
 export const FormComponents = styled.div`
@@ -71,6 +72,6 @@ export const Footer = styled.div`
   gap: 2px;
 `;
 
-export const FormLink = styled.a`
+export const FormLink = styled(Link)`
   color: #863e03;
 `;
