@@ -1,35 +1,37 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from "react";
 
 import { LocalStorageKeys } from "../enums/local-storage-keys-enum";
-
-const initalState = {
-  user: {},
-  setUser: () => {},
-  signOut: () => {},
-}
-
-export const AuthContext = createContext(initalState);
+import { useLocalStorage } from "../hooks/useLocalStorage";
+export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useLocalStorage(LocalStorageKeys.USER, null);
 
   useEffect(() => {
-    let u = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-    if (!u) {
-      localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(u));
-    } 
+    if (!user) {
+      const localUser = localStorage.getItem(LocalStorageKeys.USER);
+      if (localUser) setUser(JSON.parse(user));
+    }
   }, []);
 
   const signOut = () => {
-    localStorage.clear();
     setUser(null);
   };
 
-  const authProviderData = {
-    user,
-    setUser,
-    signOut,
-  };
+  const authProviderData = useMemo(
+    () => ({
+      user,
+      setUser,
+      signOut,
+    }),
+    [user]
+  );
 
   return (
     <AuthContext.Provider value={authProviderData}>
