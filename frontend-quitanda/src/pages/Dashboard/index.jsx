@@ -7,18 +7,13 @@ import {
   MdOutlineArrowBackIos,
 } from "react-icons/md";
 
-import { art } from "./item";
-import docinho from "../../assets/docinho.jpeg";
-
 import { SearchInput } from "../../components/Input/SearchInput";
 import { Header } from "../../components/Header/Header";
 import { Container } from "../../components/Container/Container";
 import { ContainerHeader } from "../../components/ContainerHeader/ContainerHeader";
 import Card, { CardBody, CardMedia } from "../../components/Card/Card";
 import { Link } from "react-router-dom";
-
-//CONTEXT
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from "../../contexts/AuthContext";
 
 //STYLES
 import { Root, Content, CarouselButton } from "./styles";
@@ -28,7 +23,6 @@ import { getUsersList } from "../../services/UserService";
 import { getAllProducts } from "../../services/ProductService";
 
 export const Dashboard = () => {
-  const { user } = useAuth();
   const [artistController, setArtistController] = useState(0);
   const [eventController, setEventController] = useState(0);
   const [productController, setProductController] = useState(0);
@@ -46,7 +40,6 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      console.log(user);
       const usersResult = await getUsersList();
       const productsResult = await getAllProducts("Ascending", 1);
 
@@ -89,7 +82,7 @@ export const Dashboard = () => {
             <CardBody color="black">
               <p> Preço: {product.price} </p>
               <p> {product.description} </p>
-              <Link to={`/perfil/`} >
+              <Link to={`/perfil/`}>
                 <p> Ver Detalhes </p>
               </Link>
             </CardBody>
@@ -114,10 +107,18 @@ export const Dashboard = () => {
             </div>
           </SearchInput>
 
-          <CarouselButton onClick={() => setArtistController(artistRef.current.getActiveIndex() - 1)}>
+          <CarouselButton
+            onClick={() =>
+              setArtistController(artistRef.current.getActiveIndex() - 1)
+            }
+          >
             <MdOutlineArrowBackIos />
           </CarouselButton>
-          <CarouselButton onClick={() => setArtistController(artistRef.current.getActiveIndex() + 1)}>
+          <CarouselButton
+            onClick={() =>
+              setArtistController(artistRef.current.getActiveIndex() + 1)
+            }
+          >
             <MdOutlineArrowForwardIos />
           </CarouselButton>
         </ContainerHeader>

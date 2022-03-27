@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { MdExitToApp } from "react-icons/md";
-import { LocalStorageKeys } from "../../enums/local-storage-keys-enum";
+import { MdExitToApp, MdDashboard } from "react-icons/md";
 
 // STYLES
 import {
@@ -14,9 +13,11 @@ import {
 } from "./styles";
 
 import SidebarItems from "./SidebarItems";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Sidebar = () => {
   const location = useLocation();
+  const { signOut, user } = useAuth();
 
   const lastActiveIndexString = localStorage.getItem("lastActiveIndex");
   const lastActiveIndex = Number(lastActiveIndexString);
@@ -34,8 +35,6 @@ export const Sidebar = () => {
     localStorage.setItem("lastActiveIndex", newIndex);
     setActiveIndex(newIndex);
   }
-  // const user = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-  const user = null;
 
   return (
     <Container>
@@ -43,22 +42,30 @@ export const Sidebar = () => {
         <Title>Quitanda</Title>
       </SidebarTitle>
 
+      <MenuItemLink to={"/"}>
+        <SidebarItem>
+          <MdDashboard />
+          Dashboard
+        </SidebarItem>
+      </MenuItemLink>
       <MenuContainer>
         {SidebarItems.map((item, index) => {
-          return item.authFlag.includes(user) ? (
-            <MenuItemLink key={item.name} to={item.route}>
-              <SidebarItem active={index === activeIndex}>
-                {<item.icon />}
-                {item.name}
-              </SidebarItem>
-            </MenuItemLink>
-          ) : (
-            ""
-          );
+          if (user) {
+            return item.rolePermission.includes(user.rolePermission) ? (
+              <MenuItemLink key={item.name} to={item.route}>
+                <SidebarItem active={index === activeIndex}>
+                  {<item.icon />}
+                  {item.name}
+                </SidebarItem>
+              </MenuItemLink>
+            ) : (
+              ""
+            );
+          }
         })}
 
         {user ? (
-          <SidebarItem>
+          <SidebarItem onClick={signOut}>
             <MdExitToApp />
             Sair
           </SidebarItem>

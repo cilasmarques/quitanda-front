@@ -7,22 +7,16 @@ const user = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
 
 const SidebarItems = [
   {
-    name: "Dashboard",
-    route: "/",
-    icon: MdDashboard,
-    authFlag: [null, "user", "admin"],
-  },
-  {
     name: "Perfil",
-    route: user ? `/perfil/${user.username}` : "perfil",
+    route: user ? `/perfil/${user.user}` : "/perfil",
     icon: FaUserTie,
-    authFlag: ["user"],
+    rolePermission: ["user"],
   },
   {
     name: "Usuários",
     route: "/usuarios",
     icon: FaUsers,
-    authFlag: ["admin"],
+    rolePermission: ["admin"],
   },
 ];
 

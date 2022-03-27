@@ -3,16 +3,25 @@ import PropTypes from "prop-types";
 
 // STYLES
 import { Container, Title, Divider, NavAuthLink, BoxLink } from "./styles";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Header = ({ title }) => {
+  const { user } = useAuth();
+
   return (
     <Container>
       <Title>{title}</Title>
       <BoxLink>
-        <Divider />
-        <NavAuthLink to="/login">Login</NavAuthLink>
+        {!user ? (
+          <>
+            <Divider />
+            <NavAuthLink to="/login">Login</NavAuthLink>
 
-        <NavAuthLink to="/cadastro">Cadastre-se</NavAuthLink>
+            <NavAuthLink to="/cadastro">Cadastre-se</NavAuthLink>
+          </>
+        ) : (
+          ""
+        )}
       </BoxLink>
     </Container>
   );

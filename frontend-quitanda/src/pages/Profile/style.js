@@ -10,7 +10,8 @@ export const Content = styled.div`
   overflow: hidden;
   flex-direction: row;
   flex-wrap: wrap;
-
+  justify-content: space-between;
+  width: 100%;
   overflow-x: hidden;
   padding-bottom: 0.5rem;
 `;
@@ -77,4 +78,5 @@ export const Controllers = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 60px;
+  row-gap: 5px;
 `;

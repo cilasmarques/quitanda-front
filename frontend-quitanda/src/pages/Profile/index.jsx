@@ -26,6 +26,7 @@ import { SyncLoader } from "react-spinners/";
 import { art } from "../Dashboard/item";
 
 import { getProductsByUser } from "../../services/ProductService";
+import { useAuth } from "../../contexts/AuthContext";
 
 const override = css`
   display: block;
@@ -40,6 +41,8 @@ export const Profile = () => {
   const [profileData, setProfileData] = useState([]);
   const [loggedUserData, setLoggedUserData] = useState({}); //So um teste: localStorage.setItem("@user", JSON.stringify({'_id': '205f154a88fecf6e78f1bdae9c08848d3f72dd72', username:"tecendoredes", name:"Fátima Batista"}))
   const [userIsAdmin, setUserIsAdmin] = useState(false); //mudar isso dps
+
+  const { user } = useAuth();
 
   useEffect(() => {
     const loadData = async () => {
@@ -81,52 +84,60 @@ export const Profile = () => {
       <Container>
         <ContainerHeader title="Sobre" />
         <Content>
-          <Card title={profileData.business_name}>
-            <CardMedia src={profileData.profile_picture} />
-          </Card>
+          <div style={{ display: "flex" }}>
+            <Card title={profileData.business_name}>
+              <CardMedia src={profileData.profile_picture} />
+            </Card>
 
-          <Description>
-            <h3>{profileData.business_description}</h3>
-            <SocialNetworkInfo>
-              <span> Link rede social 01: {profileData.social_network_1}</span>
-              {profileData.social_network_2 && (
-                <span>Link rede social 02: {profileData.social_network_2}</span>
-              )}
-              {profileData.social_network_3 && (
-                <span>Link rede social 03: {profileData.social_network_3}</span>
-              )}
-            </SocialNetworkInfo>
-          </Description>
+            <Description>
+              <h3>{profileData.business_description}</h3>
+              <SocialNetworkInfo>
+                <span>Link rede social 01: {profileData.social_network_1}</span>
+                {profileData.social_network_2 && (
+                  <span>
+                    Link rede social 02: {profileData.social_network_2}
+                  </span>
+                )}
+                {profileData.social_network_3 && (
+                  <span>
+                    Link rede social 03: {profileData.social_network_3}
+                  </span>
+                )}
+              </SocialNetworkInfo>
+            </Description>
 
-          <Description>
-            <h3> Dados de Validação</h3>
-            <AdminInfo>
-              <span>Email: {profileData.email}</span>
-              <span>Responsavel : {profileData.name}</span>
-              <span>Ramo de atividade: {profileData.ocupation_area}</span>
-            </AdminInfo>
-          </Description>
-
+            {user && user.rolePermission === "admin" ? (
+              <Description>
+                <h3> Dados de Validação</h3>
+                <AdminInfo>
+                  <span>Email: {profileData.email}</span>
+                  <span>Responsavel : {profileData.name}</span>
+                  <span>Ramo de atividade: {profileData.ocupation_area}</span>
+                </AdminInfo>
+              </Description>
+            ) : (
+              ""
+            )}
+          </div>
           <Controllers>
-            {userIsAdmin && (
+            {user && user.rolePermission === "admin" && (
               <ButtonWrapper variant="slim" onClick={handleAcceptUser}>
                 Accept
               </ButtonWrapper>
             )}
-            {userIsAdmin && (
+            {user && user.rolePermission === "admin" && (
               <ButtonWrapper variant="slim" onClick={handleRejectUser}>
                 Reject
               </ButtonWrapper>
             )}
-            {loggedUserData.username === name ? (
+            {user && user.user === name && (
               <ButtonWrapper variant="slim" onClick={handleEditProfile}>
                 Edit
               </ButtonWrapper>
-            ) : (
-              <ButtonWrapper variant="slim" onClick={handleReportUser}>
-                Report
-              </ButtonWrapper>
             )}
+            <ButtonWrapper variant="slim" onClick={handleReportUser}>
+              Report
+            </ButtonWrapper>
           </Controllers>
         </Content>
       </Container>
