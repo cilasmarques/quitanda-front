@@ -5,9 +5,6 @@ import { Header } from "../../components/Header/Header";
 import { Container } from "../../components/Container/Container";
 import ButtonWrapper from "../../components/Button/Button";
 
-// ENUMS
-import { LocalStorageKeys } from "../../enums/local-storage-keys-enum";
-
 import Card, { CardMedia, CardBody } from "../../components/Card/Card";
 import {
   Root,
@@ -19,6 +16,7 @@ import {
   AdminInfo,
   Controllers,
 } from "./style";
+
 import { ContainerHeader } from "../../components/ContainerHeader/ContainerHeader";
 import { SearchInput } from "../../components/Input/SearchInput";
 import { css } from "@emotion/react";
@@ -35,32 +33,25 @@ const override = css`
 `;
 
 export const Profile = () => {
+  const { user } = useAuth();
   const { name } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [profileProducts, setProfileProducts] = useState([]);
   const [profileData, setProfileData] = useState([]);
-  const [loggedUserData, setLoggedUserData] = useState({}); //So um teste: localStorage.setItem("@user", JSON.stringify({'_id': '205f154a88fecf6e78f1bdae9c08848d3f72dd72', username:"tecendoredes", name:"Fátima Batista"}))
-  const [userIsAdmin, setUserIsAdmin] = useState(false); //mudar isso dps
 
-  const { user } = useAuth();
 
   useEffect(() => {
     const loadData = async () => {
       const result = await getProductsByUser(name);
       setProfileData(result.data.user_products);
       setProfileProducts(result.data.user_products.products);
-
-      const userData = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-      if (userData) {
-        setLoggedUserData(userData);
-      }
     };
     loadData();
   }, []);
 
   const handleEditProfile = () => {
-    navigate(`edit`, { name: name });
+    navigate(`edit`, { state: { name: name } });
   };
 
   const handleReportUser = () => {
@@ -137,7 +128,7 @@ export const Profile = () => {
                 Reject
               </ButtonWrapper>
             )}
-            {user && user.user === name && (
+            {user && (user.user.username === name) && (
               <ButtonWrapper variant="slim" onClick={handleEditProfile}>
                 Edit
               </ButtonWrapper>

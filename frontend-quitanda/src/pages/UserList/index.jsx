@@ -44,7 +44,7 @@ export const UserList = () => {
   };
 
   const handleCheckUser = (username) => {
-    navigate(`/perfil/${username}/check`, { name: username });
+    navigate(`/perfil/${username}/check`, { state: { 'username': username } });
   };
 
   return (

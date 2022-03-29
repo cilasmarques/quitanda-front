@@ -43,8 +43,13 @@ export const Dashboard = () => {
       const usersResult = await getAllValidUsers();
       const productsResult = await getAllProductsWithPagination("Ascending", 1);
 
-      setUsersList(usersResult.data.valid_users_list);
-      setProductsList(productsResult.data.products);
+      let auxUserList = usersResult.data.valid_users_list;
+      let auxProductList = productsResult.data.products;
+      let validUsersIds = auxUserList.map((user) => user._id);
+      let validProducts = auxProductList.filter((product) =>  validUsersIds.includes(product.user_id));
+  
+      setUsersList(auxUserList);
+      setProductsList(validProducts);
     };
 
     loadData();
@@ -82,7 +87,7 @@ export const Dashboard = () => {
             <CardBody color="black">
               <p> Preço: {product.price} </p>
               <p> {product.description} </p>
-              <Link to={`/perfil/`}>
+              <Link to={`/perfil/`}> {/** Alterar aqui */}
                 <p> Ver Detalhes </p>
               </Link>
             </CardBody>

@@ -1,20 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import InputWrapper from "../../components/Input/Input";
 import ButtonWrapper from "../../components/Button/Button";
-
-// ENUMS
-import { LocalStorageKeys } from "../../enums/local-storage-keys-enum";
 
 // UTILS
 import fieldsValidator from "../../utils/fieldsValidator";
 
 // SERVICES
-import {
-  addUser,
-  getUserByUsername,
-  updateUserByUsername,
-} from "../../services/UserService";
+import { addUser, getUserByUsername, updateUserByUsername } from "../../services/UserService";
+
+// CONTEXT
+import { useAuth } from "../../contexts/AuthContext";
 
 // STYLES
 import {
@@ -28,7 +24,8 @@ import {
 } from "./styles";
 
 const SignUpPage = ({ crudType }) => {
-  const { name } = useParams();
+  const { state } = useLocation();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -47,11 +44,8 @@ const SignUpPage = ({ crudType }) => {
 
   useEffect(() => {
     const loadData = async () => {
-      const loggedUser = JSON.parse(
-        localStorage.getItem(LocalStorageKeys.USER)
-      );
-      if (loggedUser && loggedUser.username === name) {
-        const result = await getUserByUsername(name);
+      if (user && user.user.username === state.name) {
+        const result = await getUserByUsername(state.name);
         const userData = result.data.user;
 
         setIsEditionRequest(true);
@@ -63,8 +57,8 @@ const SignUpPage = ({ crudType }) => {
         setOcupationArea(userData.ocupation_area);
         setBusinessDescription(userData.business_description);
         setSocialNetwork1(userData.social_network_1);
-        setSocialNetwork2(userData.social_network_2);
-        setSocialNetwork3(userData.social_network_3);
+        setSocialNetwork2(userData.social_network_2 || "");
+        setSocialNetwork3(userData.social_network_3 || "");
       }
     };
     loadData();
@@ -150,32 +144,27 @@ const SignUpPage = ({ crudType }) => {
     });
 
     if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
-      const user = result.data.new_user;
-      // localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(user));
-      navigate("/produtos");
+      const registredUser = result.data.new_user;
+      navigate("/produtos", { state: { 'registredUser': registredUser } });
     }
   };
 
   const handleSubmitUpdate = async () => {
-    const loggedUser = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-    const result = { status: 201 };
-    // const result = await updateUserByUsername(loggedUser.username, {  //TODO AJEITAR NO BACKEND
-    //   "username": username,
-    //   "email": email,
-    //   "password": password,
-    //   "name": ceoName,
-    //   "business_name": businessName,
-    //   "ocupation_area": ocupationArea,
-    //   "business_description": businessDescription,
-    //   "social_network_1": socialNetwork1,
-    //   "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : loggedUser.social_network_2,
-    //   "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : loggedUser.social_network_3,
-    //   // "profile_picture": URL.createObjectURL(selectedImage) || loggedUser.profile_picture
-    // });
+    const result = await updateUserByUsername(user.user.username, {  //TODO AJEITAR NO BACKEND
+      "email": email,
+      "password": password,
+      "name": ceoName,
+      "business_name": businessName,
+      "ocupation_area": ocupationArea,
+      "business_description": businessDescription,
+      "social_network_1": socialNetwork1,
+      "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : user.user.social_network_2,
+      "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : user.user.social_network_3,
+      // "profile_picture": URL.createObjectURL(selectedImage) || user.profile_picture
+    });
 
-    if (result.status === 201 && confirm("Usuário atualizado com sucesso!")) {
-      //backend n ta funcionando
-      navigate("produtos", { username: username });
+    if (result.status === 200 && confirm("Usuário atualizado com sucesso!")) {
+      navigate("produtos", { state: { name: username } });
     }
   };
 

@@ -1,14 +1,18 @@
-import { MdDashboard } from "react-icons/md";
 import { FaUsers, FaUserTie } from "react-icons/fa";
 
 // ENUMS
 import { LocalStorageKeys } from "../../../enums/local-storage-keys-enum";
-const user = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
+
+let profilePath = '/perfil'
+const userData = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
+if (userData) {
+  profilePath = `/perfil/${userData.user.username}`
+} 
 
 const SidebarItems = [
   {
     name: "Perfil",
-    route: user ? `/perfil/${user.user}` : "/perfil",
+    route: `${profilePath}`,
     icon: FaUserTie,
     rolePermission: ["user"],
   },
