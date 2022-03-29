@@ -1,7 +1,18 @@
+// import { api } from './api';
 import axios from 'axios';
 import { handleError } from '../utils/handleErrors';
+import { LocalStorageKeys } from '../enums/local-storage-keys-enum';
+import { useCallback } from 'react';
 
 const url = 'http://localhost:8000';
+
+// axios.interceptors.request.use(function (config) {
+//   const user = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
+//   if (user) {
+//     config.headers.Authorization = `Bearer ${user.token}`;
+//   }
+//   return config;
+// });
 
 export async function addUser(user) {
   try {
@@ -11,6 +22,7 @@ export async function addUser(user) {
   };
 }
 
+//auth required
 export async function getUsersList() {
   try {
     return await axios.get(`${url}/users`);
@@ -19,6 +31,33 @@ export async function getUsersList() {
   };
 };
 
+//auth required
+export async function getAllUsersWithPagination(sortConfig, page) {
+  try {
+    return await axios.get(`${url}/users/${sortConfig}/${page}`);
+  } catch (error) {
+    handleError(error);
+  };
+};
+
+export async function getAllValidUsersWithPagination(sortConfig, page) {
+  try {
+    return await axios.get(`${url}/valid_users/${sortConfig}/${page}`);
+  } catch (error) {
+    handleError(error);
+  };
+};
+
+//auth required
+export async function getAllInvalidUsersWithPagination(sortConfig, page) {
+  try {
+    return await axios.get(`${url}/invalid_users/${sortConfig}/${page}`);
+  } catch (error) {
+    handleError(error);
+  };
+};
+
+//auth required
 export async function getAllUsers() {
   try {
     return await axios.get(`${url}/users`);
@@ -27,33 +66,35 @@ export async function getAllUsers() {
   };
 };
 
-export async function getAllValidUsers(sortConfig, page) {
+export async function getAllValidUsers() {
   try {
-    return await axios.get(`${url}/valid_users/${sortConfig}/${page}`);
+    return await axios.get(`${url}/valid_users`);
   } catch (error) {
     handleError(error);
   };
 };
 
-export async function getAllInvalidUsers(sortConfig, page) {
+//auth required
+export async function getAllInvalidUsers() {
   try {
-    return await axios.get(`${url}/invalid_users/${sortConfig}/${page}`);
+    return await axios.get(`${url}/invalid_users`);
   } catch (error) {
     handleError(error);
   };
 };
 
-export async function getUserByUsername(userName) {
+export async function getUserByUsername(username) {
   try {
-    return await axios.get(`${url}/user/${userName}`);
+    return await axios.get(`${url}/user/${username}`);
   } catch (error) {
     handleError(error);
   };
 };
 
-export async function updateUserByUsername(userName, userData) {
+//auth required
+export async function updateUserByUsername(username, userData) {
   try {
-    return await axios.patch(`${url}/user/${userName}`, {
+    return await axios.patch(`${url}/user/${username}`, {
       // headers: { 'Authorization': `Bearer ${localStorage.getItem(LocalStorageKeys.TOKEN)}` },
       body: userData,
     });
@@ -62,11 +103,19 @@ export async function updateUserByUsername(userName, userData) {
   };
 };
 
-export async function deleteUserByUsername(userName) {
+//auth required
+export async function deleteUserByUsername(username) {
   try {
-    return await axios.delete(`${url}/users/${userName}`, {
-      // headers: { 'Authorization': `Bearer ${localStorage.getItem(LocalStorageKeys.TOKEN)}` },
-    });
+    return await axios.delete(`${url}/users/${username}`);
+  } catch (error) {
+    handleError(error);
+  };
+};
+
+//auth required
+export async function updateAccessAuthorization(username, access_authorization) {
+  try {
+    return await axios.patch(`${url}/user/${username}/access_authorization`, { "access_authorization": access_authorization });
   } catch (error) {
     handleError(error);
   };

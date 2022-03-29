@@ -19,8 +19,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Root, Content, CarouselButton } from "./styles";
 
 //COMPONENTS
-import { getUsersList } from "../../services/UserService";
-import { getAllProducts } from "../../services/ProductService";
+import { getAllValidUsers } from "../../services/UserService";
+import { getAllProductsWithPagination } from "../../services/ProductService";
 
 export const Dashboard = () => {
   const [artistController, setArtistController] = useState(0);
@@ -40,10 +40,10 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      const usersResult = await getUsersList();
-      const productsResult = await getAllProducts("Ascending", 1);
+      const usersResult = await getAllValidUsers();
+      const productsResult = await getAllProductsWithPagination("Ascending", 1);
 
-      setUsersList(usersResult.data.users_list);
+      setUsersList(usersResult.data.valid_users_list);
       setProductsList(productsResult.data.products);
     };
 

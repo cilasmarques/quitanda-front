@@ -27,13 +27,13 @@ const SIGNUP_PATH = "/cadastro";
 const FORGOT_PASSWORD_PATH = "/recuperarSenha";
 
 const SignInPage = () => {
-  const { setUser, setLocalStorageLogin } = useAuth();
+  const { setUser } = useAuth();
   const params = useLocation();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (username === "") {
       alert("Username inválido");
     } else if (password === "") {
@@ -41,24 +41,24 @@ const SignInPage = () => {
     } else {
       let result = null;
       let rolePermission = null;
-      // if (params.pathname.includes("admin")) {
-      //   result = await loginAdmin(username, password);
-      //   isAdmin = true;
-      // } else {
-      //   result = await loginUser(username, password);
-      //   isAdmin = false;
-      // }
+      if (params.pathname.includes("admin")) {
+        result = await loginAdmin(username, password);
+        rolePermission = 'admin';
+      } else {
+        result = await loginUser(username, password);
+        rolePermission = 'user';
+      }
 
-      // if (result.status === 200) {
-      setUser({
-        user: "teste",
-        token: "123123123",
-        rolePermission: "user",
-      });
-      navigate("/");
-      // } else {
-      //   alert("Falha no login");
-      // }
+      if (result.status === 200) {
+        setUser({
+          user: result.data.user,
+          token: result.data.token,
+          rolePermission: rolePermission
+        });
+        navigate("/");
+      } else {
+        alert("Falha no login");
+      }
     }
   };
 

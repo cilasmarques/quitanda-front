@@ -25,6 +25,7 @@ import { css } from "@emotion/react";
 import { SyncLoader } from "react-spinners/";
 import { art } from "../Dashboard/item";
 
+import { updateAccessAuthorization } from "../../services/UserService";
 import { getProductsByUser } from "../../services/ProductService";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -66,15 +67,21 @@ export const Profile = () => {
     alert("Usuário reportado");
   };
 
-  const handleAcceptUser = () => {
+  const handleAcceptUser = async () => {
     if (confirm("Você realmente deseja aceitar esse usuário?")) {
-      //Atualizar o usuário aqui
+      const result = await updateAccessAuthorization(name, "accepted");
+      if (result && result.status === 200) {
+        navigate('/usuarios');
+      }
     }
   };
 
-  const handleRejectUser = () => {
+  const handleRejectUser = async () => {
     if (confirm("Você realmente deseja rejeitar esse usuário?")) {
-      //Atualizar o usuário aqui
+      const result = await updateAccessAuthorization(name, "rejected");
+      if (result && result.status === 200) {
+        navigate('/usuarios');
+      }
     }
   };
 

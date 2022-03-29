@@ -35,8 +35,15 @@ export const DashboardRoutes = () => {
             </Layout>
           }
         />
+        <Route
+          path=":name/check"
+          element={
+            <Layout>
+              <Profile />
+            </Layout>
+          }
+        />
         <Route path=":name/edit" element={<SignUpPage />} />
-        <Route path=":name/check" element={<Profile />} />
         <Route path=":name/edit/produtos" element={<Products />} />
       </Route>
 
@@ -49,17 +56,17 @@ export const DashboardRoutes = () => {
         }
       />
 
-      <Route path="/admin/usuarios">
-        <Route
+      {/* <Route path="/admin/usuarios"> */}
+        {/* <Route
           index
           element={
             <Layout>
               <UserList />
             </Layout>
           }
-        />
+        /> */}
         {/* <Route path=":name/validate" element={<Profile />} />   É REALMENTE NECESSÁRIO ? O CARA NUM VAI SÓ APERTAR O BOTÃO ?*/}
-      </Route>
+      {/* </Route> */}
 
       <Route path="*" element={<NotFound />} />
     </Routes>

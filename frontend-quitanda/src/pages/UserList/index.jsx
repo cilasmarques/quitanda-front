@@ -43,7 +43,7 @@ export const UserList = () => {
     }
   };
 
-  const handleCheckUser = async (username) => {
+  const handleCheckUser = (username) => {
     navigate(`/perfil/${username}/check`, { name: username });
   };
 
@@ -63,9 +63,7 @@ export const UserList = () => {
           <div>
             <h3>Status</h3>
             {userList.map((user, index) => (
-              <p key={index}>
-                {user.access_authorization === true ? "Approved" : "To review"}
-              </p>
+              <p key={index}> {user.access_authorization} </p>
             ))}
           </div>
 

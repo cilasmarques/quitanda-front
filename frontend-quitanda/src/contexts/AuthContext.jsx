@@ -8,6 +8,9 @@ import React, {
 
 import { LocalStorageKeys } from "../enums/local-storage-keys-enum";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+// import axios from "axios";
+// import { api } from "../services/Api";
+
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
@@ -16,13 +19,21 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (!user) {
       const localUser = localStorage.getItem(LocalStorageKeys.USER);
-      if (localUser) setUser(JSON.parse(user));
+      if (localUser) {
+        setUser(JSON.parse(user));
+      }
     }
   }, []);
 
   const signOut = () => {
     setUser(null);
   };
+
+  // useEffect(() => {
+	// 	if (user) {
+  //     axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
+	// 	}
+	// }, [user]);
 
   const authProviderData = useMemo(
     () => ({

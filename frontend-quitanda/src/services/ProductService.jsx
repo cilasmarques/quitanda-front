@@ -11,7 +11,8 @@ export async function addProduct(productList) {
   };
 }
 
-export async function getAllProducts(sortConfig, page) {
+//auth required
+export async function getAllProductsWithPagination(sortConfig, page) {
   try {
     return await axios.get(`${url}/products/${sortConfig}/${page}`);
   } catch (error) {
@@ -45,6 +46,7 @@ export async function updateProduct(data) {
   };
 };
 
+//auth required
 export async function deleteProductById(productId) {
   try {
     return await axios.delete(`${url}/productid/${productId}`,
