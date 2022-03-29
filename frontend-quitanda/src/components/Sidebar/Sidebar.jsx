@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MdExitToApp, MdDashboard } from "react-icons/md";
 
 // STYLES
@@ -17,6 +17,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 export const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { signOut, user } = useAuth();
 
   const lastActiveIndexString = localStorage.getItem("lastActiveIndex");
@@ -34,6 +35,11 @@ export const Sidebar = () => {
   function changeActiveIndex(newIndex) {
     localStorage.setItem("lastActiveIndex", newIndex);
     setActiveIndex(newIndex);
+  }
+
+  const handleSignOut = () => {
+    navigate('/');
+    signOut();
   }
 
   return (
@@ -65,7 +71,7 @@ export const Sidebar = () => {
         })}
 
         {user ? (
-          <SidebarItem onClick={signOut}>
+          <SidebarItem onClick={handleSignOut}>
             <MdExitToApp />
             Sair
           </SidebarItem>

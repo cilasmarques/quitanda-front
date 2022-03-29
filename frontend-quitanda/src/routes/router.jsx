@@ -14,8 +14,7 @@ export const Routes = () => {
   const { user } = useAuth();
 
   const isAuthenticated = () => {
-    const userLocalStorage = !!localStorage.getItem(LocalStorageKeys.USER);
-    return !!user && userLocalStorage;
+    return !!user;
   };
 
   return (
