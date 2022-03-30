@@ -163,7 +163,7 @@ export const Profile = () => {
               {profileProducts.map((product, index) => {
                 return (
                   <Card key={index} title={product.name}>
-                    <CardMedia src={product.images} />
+                    <CardMedia src={product.image} />
                     <CardBody>
                       <p>{product.price}</p>
                       <p>{product.description}</p>

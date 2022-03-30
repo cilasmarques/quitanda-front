@@ -39,8 +39,8 @@ export const Dashboard = () => {
 
       let auxUserList = usersResult.data.valid_users_list;
       let auxProductList = productsResult.data.products;
-      let validUsersIds = auxUserList.map((user) => user._id);
-      let validProducts = auxProductList.filter((product) =>  validUsersIds.includes(product.user_id));
+      let validUsersIds = auxUserList.map((user) => user.username);
+      let validProducts = auxProductList.filter((product) =>  validUsersIds.includes(product.username));
   
       setUsersList(auxUserList);
       setProductsList(validProducts);
@@ -77,11 +77,11 @@ export const Dashboard = () => {
       productsList.map((product, index) => {
         cardList.push(
           <Card title={product.name} key={index}>
-            <CardMedia src={product.images} />
+            <CardMedia src={product.image} /> {/** Alterar para a string base64 */}
             <CardBody color="black">
               <p> Preço: {product.price} </p>
               <p> {product.description} </p>
-              <Link to={`/perfil/`}> {/** Alterar aqui */}
+              <Link to={`/perfil/${product.username}`}> 
                 <p> Ver Detalhes </p>
               </Link>
             </CardBody>

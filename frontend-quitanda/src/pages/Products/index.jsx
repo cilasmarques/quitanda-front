@@ -88,8 +88,8 @@ const Products = () => {
         'name': productName,
         'description': productDescription,
         'price': `R$: ${productPrice.toFixed(2)}`,
-        'images': base64image,
-        'user_id': cUser.username
+        'image': base64image,
+        'username': cUser.username
       };
       setCurrentProductList(previousState => [...previousState, product]);
     } else if (alreadyExists) {
@@ -149,7 +149,7 @@ const Products = () => {
     currentProductList.map((product, index) => {
       cardList.push(
         <Card title={product.name} key={index}>
-          <CardMedia src={product.images} size="default" />
+          <CardMedia src={product.image} size="default" />
           <CardBody color="black">
             <p> Preço: {product.price} </p>
             <p> Descrição: {product.description} </p>
