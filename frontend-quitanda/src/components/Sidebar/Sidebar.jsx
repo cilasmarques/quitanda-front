@@ -54,22 +54,26 @@ export const Sidebar = () => {
           Dashboard
         </SidebarItem>
       </MenuItemLink>
-      <MenuContainer>
-        {SidebarItems.map((item, index) => {
-          if (user) {
-            return item.rolePermission.includes(user.rolePermission) ? (
-              <MenuItemLink key={item.name} to={item.route}>
-                <SidebarItem active={index === activeIndex}>
-                  {<item.icon />}
-                  {item.name}
-                </SidebarItem>
-              </MenuItemLink>
-            ) : (
-              ""
-            );
-          }
-        })}
 
+      {user && user.rolePermission.includes("user") && (
+        <MenuItemLink to={`/perfil/${user.user.username}`}>
+        <SidebarItem>
+          <MdDashboard />
+          Perfil
+        </SidebarItem>
+      </MenuItemLink>
+      )}
+
+      {user && user.rolePermission.includes("admin") && (
+        <MenuItemLink to={"/usuarios"}>
+          <SidebarItem>
+            <MdDashboard />
+            Usuários
+          </SidebarItem>
+        </MenuItemLink>
+      )}
+
+      <MenuContainer>
         {user ? (
           <SidebarItem onClick={handleSignOut}>
             <MdExitToApp />

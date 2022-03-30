@@ -124,7 +124,19 @@ const SignUpPage = ({ crudType }) => {
     }
   };
 
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
   const handleSubmitCreate = async () => {
+    let base64image = null;
+    if (selectedImage) { base64image = await getBase64(selectedImage); } 
+
     const result = await addUser({
       username: username,
       email: email,
@@ -140,7 +152,7 @@ const SignUpPage = ({ crudType }) => {
       social_network_3: handleValidateField(socialNetwork3)
         ? socialNetwork3
         : null,
-      // "profile_picture": selectedImage ? URL.createObjectURL(selectedImage) : null
+      profile_picture: base64image
     });
 
     if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
@@ -150,17 +162,20 @@ const SignUpPage = ({ crudType }) => {
   };
 
   const handleSubmitUpdate = async () => {
+    let base64image = null;
+    if (selectedImage) { base64image = await getBase64(selectedImage); } 
+
     const result = await updateUserByUsername(user.user.username, {  //TODO AJEITAR NO BACKEND
-      "email": email,
-      "password": password,
-      "name": ceoName,
-      "business_name": businessName,
-      "ocupation_area": ocupationArea,
-      "business_description": businessDescription,
-      "social_network_1": socialNetwork1,
-      "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : user.user.social_network_2,
-      "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : user.user.social_network_3,
-      // "profile_picture": URL.createObjectURL(selectedImage) || user.profile_picture
+      email: email,
+      password: password,
+      name: ceoName,
+      business_name: businessName,
+      ocupation_area: ocupationArea,
+      business_description: businessDescription,
+      social_network_1: socialNetwork1,
+      social_network_2: handleValidateField(socialNetwork2) ? socialNetwork2 : user.user.social_network_2,
+      social_network_3: handleValidateField(socialNetwork3) ? socialNetwork3 : user.user.social_network_3,
+      profile_picture: base64image
     });
 
     if (result.status === 200 && confirm("Usuário atualizado com sucesso!")) {

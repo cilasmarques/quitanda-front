@@ -21,7 +21,6 @@ import { ContainerHeader } from "../../components/ContainerHeader/ContainerHeade
 import { SearchInput } from "../../components/Input/SearchInput";
 import { css } from "@emotion/react";
 import { SyncLoader } from "react-spinners/";
-import { art } from "../Dashboard/item";
 
 import { updateAccessAuthorization } from "../../services/UserService";
 import { getProductsByUser } from "../../services/ProductService";

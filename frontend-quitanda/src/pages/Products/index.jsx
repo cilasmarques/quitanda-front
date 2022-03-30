@@ -60,11 +60,20 @@ const Products = () => {
     return !fieldsValidator.isUndefined(field) && !fieldsValidator.isEmpty(field);
   };
 
-  const handleAddProductsOnList = () => {
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  const handleAddProductsOnList = async () => {
     const validFields = handleValidateField(productName) && handleValidateField(productDescription) && handleValidateField(productPrice);
     const alreadyExists = currentProductList.find(product => product.name === productName);
 
-    let cUser = user.user || state.registredUser;
+    let cUser = user ? user.user : state.registredUser;
 
     if (!cUser) {
       alert("Você precisa estar registrado para adicionar um produto!");
@@ -74,13 +83,13 @@ const Products = () => {
     } else if (!selectedImage) {
       alert("Você esqueceu de adicionar uma imagem do produto!");
     } else if (validFields && !alreadyExists && cUser._id) {
+      const base64image = await getBase64(selectedImage); 
       let product = {
         'name': productName,
         'description': productDescription,
         'price': `R$: ${productPrice.toFixed(2)}`,
-        'images': "",
-        // 'images': URL.createObjectURL(selectedImage),
-        'user_id': cUser._id
+        'images': base64image,
+        'user_id': cUser.username
       };
       setCurrentProductList(previousState => [...previousState, product]);
     } else if (alreadyExists) {
