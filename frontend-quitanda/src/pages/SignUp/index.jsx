@@ -135,7 +135,7 @@ const SignUpPage = ({ crudType }) => {
 
   const handleSubmitCreate = async () => {
     let base64image = null;
-    if (selectedImage) { base64image = await getBase64(selectedImage); } 
+    if (selectedImage) { base64image = await getBase64(selectedImage); }
 
     const result = await addUser({
       username: username,
@@ -163,7 +163,7 @@ const SignUpPage = ({ crudType }) => {
 
   const handleSubmitUpdate = async () => {
     let base64image = null;
-    if (selectedImage) { base64image = await getBase64(selectedImage); } 
+    if (selectedImage) { base64image = await getBase64(selectedImage); }
 
     const result = await updateUserByUsername(user.user.username, {  //TODO AJEITAR NO BACKEND
       email: email,
@@ -175,11 +175,13 @@ const SignUpPage = ({ crudType }) => {
       social_network_1: socialNetwork1,
       social_network_2: handleValidateField(socialNetwork2) ? socialNetwork2 : user.user.social_network_2,
       social_network_3: handleValidateField(socialNetwork3) ? socialNetwork3 : user.user.social_network_3,
-      profile_picture: base64image
+      // profile_picture: base64image,
     });
 
     if (result.status === 200 && confirm("Usuário atualizado com sucesso!")) {
       navigate("produtos", { state: { name: username } });
+    } else {
+      alert("Erro ao atualizar usuário!");
     }
   };
 
@@ -281,19 +283,18 @@ const SignUpPage = ({ crudType }) => {
             value={socialNetwork3}
             onChange={(e) => setSocialNetwork3(e.target.value)}
           />
-          {/* <InputWrapper placeholder='Comprovante de MEI' /> */}
-          {/* <InputWrapper placeholder='CPF/CNPJ' /> */}
-          {/* <InputWrapper placeholder='Data de nascimento (DD/MM/AAAA)' /> */}
-          <div>
-            <span>Foto de perfil: </span>
-            <input
-              variant="file"
-              type="file"
-              accept="image/png image/jpg image/jpeg"
-              placeholder="Imagem de perfil*"
-              onChange={(e) => setSelectedImage(e.target.files[0])}
-            />
-          </div>
+          {!isEditionRequest &&
+            <div>
+              <span>Foto de perfil: </span>
+              <input
+                variant="file"
+                type="file"
+                accept="image/png image/jpg image/jpeg"
+                placeholder="Imagem de perfil*"
+                onChange={(e) => setSelectedImage(e.target.files[0])}
+              />
+            </div>
+          }
         </FormComponents>
 
         <Footer>
