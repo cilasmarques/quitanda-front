@@ -1,7 +1,7 @@
 import axios from "axios";
 import { handleError } from "../utils/handleErrors";
 
-const url = "https://api-quitanda.herokuapp.com";
+const url = import.meta.env.VITE_API_URL;
 
 export async function loginAdmin(uname, pass) {
   try {

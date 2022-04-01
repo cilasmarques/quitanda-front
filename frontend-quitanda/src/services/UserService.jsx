@@ -2,7 +2,7 @@ import axios from "axios";
 import { handleError } from "../utils/handleErrors";
 import { LocalStorageKeys } from "../enums/local-storage-keys-enum";
 
-const url = "https://api-quitanda.herokuapp.com";
+const url = import.meta.env.VITE_API_URL;
 
 const verifyToken = () => {
   const localUser = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
@@ -15,24 +15,6 @@ const verifyToken = () => {
     return false;
   }
 };
-
-// const verifyToken = () => {
-//   var jwt = require('jsonwebtoken');
-//   try {
-//     const localUser = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-//     if (localUser) {
-//       const token = localUser.token;
-//       jwt.verify(token, "chave_do_batman");
-//       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   } catch (error) {
-//     alert("Sua sessão expirou.\nÉ necessário autenticar-se novamente");
-//     return false;
-//   };
-// };
 
 // NOT AUTH ROUTES
 export async function addUser(user) {

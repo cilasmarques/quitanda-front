@@ -2,7 +2,7 @@ import axios from "axios";
 import { handleError } from "../utils/handleErrors";
 import { LocalStorageKeys } from "../enums/local-storage-keys-enum";
 
-const url = "https://api-quitanda.herokuapp.com";
+const url = import.meta.env.VITE_API_URL;
 
 const verifyToken = () => {
   const localUser = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
