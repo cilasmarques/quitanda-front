@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import InputWrapper from "../../components/Input/Input";
 import ButtonWrapper from "../../components/Button/Button";
 import Card, { CardBody, CardMedia } from "../../components/Card/Card";
 
-// ENUMS
-import { LocalStorageKeys } from "../../enums/local-storage-keys-enum";
+// CONTEXT
+import { useAuth } from "../../contexts/AuthContext";
 
 // SERVICES
-import { addProduct, getProductsByUser } from "../../services/ProductService.jsx";
+import { addProduct, getProductsByUser, deleteProductsById } from "../../services/ProductService.jsx";
 
 // UTILS
 import fieldsValidator from "../../utils/fieldsValidator";
@@ -30,9 +30,9 @@ import {
 const REDIRECTION_PAGE = '/'
 
 const Products = () => {
-  const user = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-  const { name } = useParams();
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const { state } = useLocation(); 
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState(0);
@@ -43,8 +43,8 @@ const Products = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      if (user && user.username === name) {
-        const result = await getProductsByUser(name);
+      if (user && user.user.username === state.name) {
+        const result = await getProductsByUser(state.name);
         const products = result.data.user_products.products
 
         setIsEditionRequest(true);
@@ -53,31 +53,43 @@ const Products = () => {
         setCurrentProductList(products);
       }
     }
-    loadData();
+    loadData(); 
   }, []);
 
   const handleValidateField = (field) => {
     return !fieldsValidator.isUndefined(field) && !fieldsValidator.isEmpty(field);
   };
 
-  const handleAddProductsOnList = () => {
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  const handleAddProductsOnList = async () => {
     const validFields = handleValidateField(productName) && handleValidateField(productDescription) && handleValidateField(productPrice);
     const alreadyExists = currentProductList.find(product => product.name === productName);
 
-    if (!user) {
+    let cUser = user ? user.user : state.registredUser;
+
+    if (!cUser) {
       alert("Você precisa estar registrado para adicionar um produto!");
       navigate(REDIRECTION_PAGE);
     } else if (!productPrice) {
       alert("Você precisa adicionar o preço do produto!");
     } else if (!selectedImage) {
       alert("Você esqueceu de adicionar uma imagem do produto!");
-    } else if (validFields && !alreadyExists && user._id) {
+    } else if (validFields && !alreadyExists && cUser._id) {
+      const base64image = await getBase64(selectedImage); 
       let product = {
         'name': productName,
         'description': productDescription,
         'price': `R$: ${productPrice.toFixed(2)}`,
-        'images': URL.createObjectURL(selectedImage),
-        'user_id': user._id
+        'image': base64image,
+        'username': cUser.username
       };
       setCurrentProductList(previousState => [...previousState, product]);
     } else if (alreadyExists) {
@@ -98,14 +110,14 @@ const Products = () => {
     let removedProducts = initialProductList.filter(p => !currentProductList.includes(p));
     let addedProducts = currentProductList.filter(p => !initialProductList.includes(p));
 
-    if (addedProducts.length > 0) {
+    if (addedProducts.length > 0 || removedProducts.length > 0) {
       if (isEditionRequest) {
-        handleSubmitUpdate();
+        handleSubmitUpdate(addedProducts, removedProducts);
       } else {
         handleSubmitCreate(addedProducts);
       }
     } else {
-      alert("Nenhum produto foi adicionado.");
+      alert("A lista de produtos não foi alterada.");
     }
   }
 
@@ -118,9 +130,11 @@ const Products = () => {
     }
   }
 
-  const handleSubmitUpdate = async () => { //AJEITAR ESSA REQUISIÇÃO NO BACKEND
-    let result = { status: 201 };
-    if (result.status === 201 && confirm("Lista de produtos cadastrada com sucesso!")) {
+  const handleSubmitUpdate = async (addedProducts, removedProducts) => { //AJEITAR ESSA REQUISIÇÃO NO BACKEND
+    let result1 = await deleteProductsById(removedProducts) 
+    let result2 = await addProduct(addedProducts);
+
+    if (result1.status === 200 && result2.status === 201 && confirm("Lista de produtos atualizada com sucesso!")) {
       navigate(REDIRECTION_PAGE);
     } else {
       alert("Falha ao cadastrar a lista de produtos.");
@@ -135,7 +149,7 @@ const Products = () => {
     currentProductList.map((product, index) => {
       cardList.push(
         <Card title={product.name} key={index}>
-          <CardMedia src={product.images} size="default" />
+          <CardMedia src={product.image} size="default" />
           <CardBody color="black">
             <p> Preço: {product.price} </p>
             <p> Descrição: {product.description} </p>

@@ -1,5 +1,5 @@
 
 export const ThemeNames = Object.freeze({
-	LIGHT = 'light',
-	DARK = 'dark',
+	LIGHT: 'light',
+	DARK: 'dark',
 });

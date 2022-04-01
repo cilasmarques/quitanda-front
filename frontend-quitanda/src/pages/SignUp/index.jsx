@@ -1,16 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import InputWrapper from "../../components/Input/Input";
 import ButtonWrapper from "../../components/Button/Button";
-
-// ENUMS
-import { LocalStorageKeys } from "../../enums/local-storage-keys-enum";
 
 // UTILS
 import fieldsValidator from "../../utils/fieldsValidator";
 
 // SERVICES
 import { addUser, getUserByUsername, updateUserByUsername } from "../../services/UserService";
+
+// CONTEXT
+import { useAuth } from "../../contexts/AuthContext";
 
 // STYLES
 import {
@@ -23,8 +23,9 @@ import {
   Footer,
 } from "./styles";
 
-const SignUpPage = () => {
-  const { name } = useParams();
+const SignUpPage = ({ crudType }) => {
+  const { state } = useLocation();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -43,13 +44,12 @@ const SignUpPage = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      const loggedUser = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-      if (loggedUser && loggedUser.username === name) {
-        const result = await getUserByUsername(name);
+      if (user && user.user.username === state.name) {
+        const result = await getUserByUsername(state.name);
         const userData = result.data.user;
 
         setIsEditionRequest(true);
-        
+
         setEmail(userData.email);
         setUsername(userData.username);
         setBusinessName(userData.business_name);
@@ -57,20 +57,28 @@ const SignUpPage = () => {
         setOcupationArea(userData.ocupation_area);
         setBusinessDescription(userData.business_description);
         setSocialNetwork1(userData.social_network_1);
-        setSocialNetwork2(userData.social_network_2);
-        setSocialNetwork3(userData.social_network_3);
+        setSocialNetwork2(userData.social_network_2 || "");
+        setSocialNetwork3(userData.social_network_3 || "");
       }
-    }
+    };
     loadData();
-  }, [])
+  }, []);
 
   const handleValidateField = (field) => {
-    return !fieldsValidator.isUndefined(field) && !fieldsValidator.isEmpty(field)
+    return (
+      !fieldsValidator.isUndefined(field) && !fieldsValidator.isEmpty(field)
+    );
   };
 
   const handleNextPage = () => {
-    const validFields = handleValidateField(email) && handleValidateField(username) && handleValidateField(password) &&
-      handleValidateField(confirmPassword) && handleValidateField(businessName) && handleValidateField(ceoName) && handleValidateField(ocupationArea);
+    const validFields =
+      handleValidateField(email) &&
+      handleValidateField(username) &&
+      handleValidateField(password) &&
+      handleValidateField(confirmPassword) &&
+      handleValidateField(businessName) &&
+      handleValidateField(ceoName) &&
+      handleValidateField(ocupationArea);
 
     if (!email.includes("@") || !email.includes(".")) {
       alert("Email inválido :(");
@@ -88,10 +96,18 @@ const SignUpPage = () => {
   };
 
   const handleUserValidation = () => {
-    const validFields_page1 = handleValidateField(email) && handleValidateField(username) && handleValidateField(password) &&
-      handleValidateField(confirmPassword) && handleValidateField(businessName) && handleValidateField(ceoName) && handleValidateField(ocupationArea);
+    const validFields_page1 =
+      handleValidateField(email) &&
+      handleValidateField(username) &&
+      handleValidateField(password) &&
+      handleValidateField(confirmPassword) &&
+      handleValidateField(businessName) &&
+      handleValidateField(ceoName) &&
+      handleValidateField(ocupationArea);
 
-    const validFields_page2 = handleValidateField(businessDescription) && handleValidateField(socialNetwork1);
+    const validFields_page2 =
+      handleValidateField(businessDescription) &&
+      handleValidateField(socialNetwork1);
 
     if (validFields_page1 && validFields_page2) {
       if (isEditionRequest) {
@@ -102,51 +118,70 @@ const SignUpPage = () => {
     } else if (validFields_page1 && !validFields_page2) {
       alert("Por favor, preencha todos os campos obrigatórios!");
     } else {
-      alert("Por favor, preencha todos os campos obrigatórios!\Lembre-se de também verificar a página anterior.");
+      alert(
+        "Por favor, preencha todos os campos obrigatórios!Lembre-se de também verificar a página anterior."
+      );
     }
+  };
+
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
   }
 
   const handleSubmitCreate = async () => {
+    let base64image = null;
+    if (selectedImage) { base64image = await getBase64(selectedImage); }
+
     const result = await addUser({
-      "username": username,
-      "email": email,
-      "password": password,
-      "name": ceoName,
-      "business_name": businessName,
-      "ocupation_area": ocupationArea,
-      "business_description": businessDescription,
-      "social_network_1": socialNetwork1,
-      "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : null,
-      "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : null,
-      // "profile_picture": selectedImage ? URL.createObjectURL(selectedImage) : null
+      username: username,
+      email: email,
+      password: password,
+      name: ceoName,
+      business_name: businessName,
+      ocupation_area: ocupationArea,
+      business_description: businessDescription,
+      social_network_1: socialNetwork1,
+      social_network_2: handleValidateField(socialNetwork2)
+        ? socialNetwork2
+        : null,
+      social_network_3: handleValidateField(socialNetwork3)
+        ? socialNetwork3
+        : null,
+      profile_picture: base64image
     });
 
     if (result.status === 201 && confirm("Usuário cadastrado com sucesso!")) {
-      const user = result.data.new_user
-      localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(user));
-      navigate('/produtos');
+      const registredUser = result.data.new_user;
+      navigate("/produtos", { state: { 'registredUser': registredUser } });
     }
   };
 
   const handleSubmitUpdate = async () => {
-    const loggedUser = JSON.parse(localStorage.getItem(LocalStorageKeys.USER));
-    const result = {status: 201};
-    // const result = await updateUserByUsername(loggedUser.username, {  //TODO AJEITAR NO BACKEND
-    //   "username": username,
-    //   "email": email,
-    //   "password": password,
-    //   "name": ceoName,
-    //   "business_name": businessName,
-    //   "ocupation_area": ocupationArea,
-    //   "business_description": businessDescription,
-    //   "social_network_1": socialNetwork1,
-    //   "social_network_2": handleValidateField(socialNetwork2) ? socialNetwork2 : loggedUser.social_network_2,
-    //   "social_network_3": handleValidateField(socialNetwork3) ? socialNetwork3 : loggedUser.social_network_3,
-    //   // "profile_picture": URL.createObjectURL(selectedImage) || loggedUser.profile_picture
-    // });
+    let base64image = null;
+    if (selectedImage) { base64image = await getBase64(selectedImage); }
 
-    if (result.status === 201 && confirm("Usuário atualizado com sucesso!")) { //backend n ta funcionando
-      navigate('produtos', {username: username});
+    const result = await updateUserByUsername(user.user.username, {  //TODO AJEITAR NO BACKEND
+      email: email,
+      password: password,
+      name: ceoName,
+      business_name: businessName,
+      ocupation_area: ocupationArea,
+      business_description: businessDescription,
+      social_network_1: socialNetwork1,
+      social_network_2: handleValidateField(socialNetwork2) ? socialNetwork2 : user.user.social_network_2,
+      social_network_3: handleValidateField(socialNetwork3) ? socialNetwork3 : user.user.social_network_3,
+      // profile_picture: base64image,
+    });
+
+    if (result.status === 200 && confirm("Usuário atualizado com sucesso!")) {
+      navigate("produtos", { state: { name: username } });
+    } else {
+      alert("Erro ao atualizar usuário!");
     }
   };
 
@@ -159,17 +194,59 @@ const SignUpPage = () => {
         </Header>
 
         <FormComponents>
-          <InputWrapper required placeholder='Email*' value={email} type="email" onChange={(e) => setEmail(e.target.value)} />
-          <InputWrapper required placeholder='Nome de usuário*' value={username} onChange={(e) => setUsername(e.target.value)} />
-          <InputWrapper required placeholder='Senha*' value={password} variant='password' type='password' onChange={(e) => setPassword(e.target.value)} />
-          <InputWrapper required placeholder='Confirmar Senha*' value={confirmPassword} variant='password' type='password' onChange={(e) => setConfirmPassword(e.target.value)} />
-          <InputWrapper required placeholder='Nome da empresa/negócio*' value={businessName} onChange={(e) => setBusinessName(e.target.value)} />
-          <InputWrapper required placeholder='Nome do responsável pela empresa/negócio*' value={ceoName} onChange={(e) => setCeoName(e.target.value)} />
-          <InputWrapper required placeholder='Ramo de atividade*' value={ocupationArea} onChange={(e) => setOcupationArea(e.target.value)} />
+          <InputWrapper
+            required
+            placeholder="Email*"
+            value={email}
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <InputWrapper
+            required
+            placeholder="Nome de usuário*"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <InputWrapper
+            required
+            placeholder="Senha*"
+            value={password}
+            variant="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <InputWrapper
+            required
+            placeholder="Confirmar Senha*"
+            value={confirmPassword}
+            variant="password"
+            type="password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <InputWrapper
+            required
+            placeholder="Nome da empresa/negócio*"
+            value={businessName}
+            onChange={(e) => setBusinessName(e.target.value)}
+          />
+          <InputWrapper
+            required
+            placeholder="Nome do responsável pela empresa/negócio*"
+            value={ceoName}
+            onChange={(e) => setCeoName(e.target.value)}
+          />
+          <InputWrapper
+            required
+            placeholder="Ramo de atividade*"
+            value={ocupationArea}
+            onChange={(e) => setOcupationArea(e.target.value)}
+          />
         </FormComponents>
 
         <Footer>
-          <ButtonWrapper variant="form" onClick={handleNextPage}>Próximo</ButtonWrapper>
+          <ButtonWrapper variant="form" onClick={handleNextPage}>
+            Próximo
+          </ButtonWrapper>
         </Footer>
       </BoxContainer>
     </Container>
@@ -184,32 +261,55 @@ const SignUpPage = () => {
         </Header>
 
         <FormComponents>
-          <InputWrapper placeholder='Descrição da empresa/negócio *' variant="text" value={businessDescription} onChange={(e) => setBusinessDescription(e.target.value)} />
-          <InputWrapper required placeholder='Link rede social 01 *' value={socialNetwork1} onChange={(e) => setSocialNetwork1(e.target.value)} />
-          <InputWrapper placeholder='Link rede social 02' value={socialNetwork2} onChange={(e) => setSocialNetwork2(e.target.value)} />
-          <InputWrapper placeholder='Link rede social 03' value={socialNetwork3} onChange={(e) => setSocialNetwork3(e.target.value)} />
-          {/* <InputWrapper placeholder='Comprovante de MEI' /> */}
-          {/* <InputWrapper placeholder='CPF/CNPJ' /> */}
-          {/* <InputWrapper placeholder='Data de nascimento (DD/MM/AAAA)' /> */}
-          <div>
-            <span>Foto de perfil: </span>
-            <input variant='file' type='file' accept="image/png image/jpg image/jpeg" placeholder="Imagem de perfil*" onChange={(e) => setSelectedImage(e.target.files[0])} />
-          </div>
+          <InputWrapper
+            placeholder="Descrição da empresa/negócio *"
+            variant="text"
+            value={businessDescription}
+            onChange={(e) => setBusinessDescription(e.target.value)}
+          />
+          <InputWrapper
+            required
+            placeholder="Link rede social 01 *"
+            value={socialNetwork1}
+            onChange={(e) => setSocialNetwork1(e.target.value)}
+          />
+          <InputWrapper
+            placeholder="Link rede social 02"
+            value={socialNetwork2}
+            onChange={(e) => setSocialNetwork2(e.target.value)}
+          />
+          <InputWrapper
+            placeholder="Link rede social 03"
+            value={socialNetwork3}
+            onChange={(e) => setSocialNetwork3(e.target.value)}
+          />
+          {!isEditionRequest &&
+            <div>
+              <span>Foto de perfil: </span>
+              <input
+                variant="file"
+                type="file"
+                accept="image/png image/jpg image/jpeg"
+                placeholder="Imagem de perfil*"
+                onChange={(e) => setSelectedImage(e.target.files[0])}
+              />
+            </div>
+          }
         </FormComponents>
 
         <Footer>
-          <ButtonWrapper variant="form" onClick={handleNextPage}>Voltar</ButtonWrapper>
-          <ButtonWrapper variant="form" onClick={handleUserValidation}>Validar Dados</ButtonWrapper>
+          <ButtonWrapper variant="form" onClick={handleNextPage}>
+            Voltar
+          </ButtonWrapper>
+          <ButtonWrapper variant="form" onClick={handleUserValidation}>
+            Validar Dados
+          </ButtonWrapper>
         </Footer>
       </BoxContainer>
     </Container>
   );
 
-  return (
-    <Fragment>
-      {switchScreen ? secondScreen : firstScreen}
-    </Fragment>
-  );
+  return <Fragment>{switchScreen ? secondScreen : firstScreen}</Fragment>;
 };
 
 export default SignUpPage;

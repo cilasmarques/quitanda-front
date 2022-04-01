@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { MdExitToApp } from "react-icons/md";
+import { useLocation, useNavigate } from "react-router-dom";
+import { MdExitToApp, MdDashboard } from "react-icons/md";
 
 // STYLES
 import {
@@ -13,9 +13,12 @@ import {
 } from "./styles";
 
 import SidebarItems from "./SidebarItems";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { signOut, user } = useAuth();
 
   const lastActiveIndexString = localStorage.getItem("lastActiveIndex");
   const lastActiveIndex = Number(lastActiveIndexString);
@@ -34,28 +37,50 @@ export const Sidebar = () => {
     setActiveIndex(newIndex);
   }
 
+  const handleSignOut = () => {
+    navigate("/");
+    signOut();
+  };
+
   return (
     <Container>
       <SidebarTitle>
         <Title>Quitanda</Title>
       </SidebarTitle>
 
-      <MenuContainer>
-        {SidebarItems.map((item, index) => {
-          return (
-            <MenuItemLink key={item.name} to={item.route}>
-              <SidebarItem active={index === activeIndex}>
-                {<item.icon />}
-                {item.name}
-              </SidebarItem>
-            </MenuItemLink>
-          );
-        })}
-
+      <MenuItemLink to={"/"}>
         <SidebarItem>
-          <MdExitToApp />
-          Sair
+          <MdDashboard />
+          Dashboard
         </SidebarItem>
+      </MenuItemLink>
+      {user && user.rolePermission.includes("user") && (
+        <MenuItemLink to={`/perfil/${user.user}`}>
+          <SidebarItem>
+            <MdDashboard />
+            Perfil
+          </SidebarItem>
+        </MenuItemLink>
+      )}
+
+      {user && user.rolePermission.includes("admin") && (
+        <MenuItemLink to={"/usuarios"}>
+          <SidebarItem>
+            <MdDashboard />
+            Usuários
+          </SidebarItem>
+        </MenuItemLink>
+      )}
+
+      <MenuContainer>
+        {user ? (
+          <SidebarItem onClick={handleSignOut}>
+            <MdExitToApp />
+            Sair
+          </SidebarItem>
+        ) : (
+          ""
+        )}
       </MenuContainer>
     </Container>
   );
