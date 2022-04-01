@@ -43,17 +43,17 @@ const SignInPage = () => {
       let rolePermission = null;
       if (params.pathname.includes("admin")) {
         result = await loginAdmin(username, password);
-        rolePermission = 'admin';
+        rolePermission = "admin";
       } else {
         result = await loginUser(username, password);
-        rolePermission = 'user';
+        rolePermission = "user";
       }
 
       if (result.status === 200) {
         setUser({
-          user: result.data.user,
+          user: result.data.username,
           token: result.data.token,
-          rolePermission: rolePermission
+          rolePermission: rolePermission,
         });
         navigate("/");
       } else {

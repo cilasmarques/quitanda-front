@@ -39,7 +39,6 @@ export const Profile = () => {
   const [profileProducts, setProfileProducts] = useState([]);
   const [profileData, setProfileData] = useState([]);
 
-
   useEffect(() => {
     const loadData = async () => {
       const result = await getProductsByUser(name);
@@ -61,7 +60,7 @@ export const Profile = () => {
     if (confirm("Você realmente deseja aceitar esse usuário?")) {
       const result = await updateAccessAuthorization(name, "accepted");
       if (result && result.status === 200) {
-        navigate('/usuarios');
+        navigate("/usuarios");
       }
     }
   };
@@ -70,7 +69,7 @@ export const Profile = () => {
     if (confirm("Você realmente deseja rejeitar esse usuário?")) {
       const result = await updateAccessAuthorization(name, "rejected");
       if (result && result.status === 200) {
-        navigate('/usuarios');
+        navigate("/usuarios");
       }
     }
   };
@@ -127,7 +126,7 @@ export const Profile = () => {
                 Reject
               </ButtonWrapper>
             )}
-            {user && (user.user.username === name) && (
+            {user && user.user.username === name && (
               <ButtonWrapper variant="slim" onClick={handleEditProfile}>
                 Edit
               </ButtonWrapper>
@@ -140,15 +139,7 @@ export const Profile = () => {
       </Container>
 
       <Container>
-        <ContainerHeader title="Produtos">
-          <SearchInput>
-            <div className="search">
-              <div>
-                <input type="text" placeholder="Pesquisar..." />
-              </div>
-            </div>
-          </SearchInput>
-        </ContainerHeader>
+        <ContainerHeader title="Produtos"></ContainerHeader>
 
         <ProductContainer>
           {loading ? (

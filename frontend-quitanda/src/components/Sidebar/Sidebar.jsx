@@ -38,9 +38,9 @@ export const Sidebar = () => {
   }
 
   const handleSignOut = () => {
-    navigate('/');
+    navigate("/");
     signOut();
-  }
+  };
 
   return (
     <Container>
@@ -54,14 +54,13 @@ export const Sidebar = () => {
           Dashboard
         </SidebarItem>
       </MenuItemLink>
-
       {user && user.rolePermission.includes("user") && (
-        <MenuItemLink to={`/perfil/${user.user.username}`}>
-        <SidebarItem>
-          <MdDashboard />
-          Perfil
-        </SidebarItem>
-      </MenuItemLink>
+        <MenuItemLink to={`/perfil/${user.user}`}>
+          <SidebarItem>
+            <MdDashboard />
+            Perfil
+          </SidebarItem>
+        </MenuItemLink>
       )}
 
       {user && user.rolePermission.includes("admin") && (

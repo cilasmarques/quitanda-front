@@ -14,7 +14,6 @@ import UserList from "../../pages/UserList";
 import { Layout } from "../../components/Layout/Layout";
 
 export const DashboardRoutes = () => {
-  console.log("dashboard rotas");
   return (
     <Routes>
       <Route
@@ -57,7 +56,7 @@ export const DashboardRoutes = () => {
       />
 
       {/* <Route path="/admin/usuarios"> */}
-        {/* <Route
+      {/* <Route
           index
           element={
             <Layout>
@@ -65,7 +64,7 @@ export const DashboardRoutes = () => {
             </Layout>
           }
         /> */}
-        {/* <Route path=":name/validate" element={<Profile />} />   É REALMENTE NECESSÁRIO ? O CARA NUM VAI SÓ APERTAR O BOTÃO ?*/}
+      {/* <Route path=":name/validate" element={<Profile />} />   É REALMENTE NECESSÁRIO ? O CARA NUM VAI SÓ APERTAR O BOTÃO ?*/}
       {/* </Route> */}
 
       <Route path="*" element={<NotFound />} />

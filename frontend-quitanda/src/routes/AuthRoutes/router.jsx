@@ -14,7 +14,6 @@ import RecoveryPassword from "../../pages/RecoveryPassword";
 import { Layout } from "../../components/Layout/Layout";
 
 export const AuthRoutes = () => {
-  console.log("autorização rotas");
   return (
     <Switch>
       <Route path="/login">
